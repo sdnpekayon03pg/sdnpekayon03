@@ -1,0 +1,1602 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SD Negeri Pekayon 03 - Membentuk Generasi Cerdas</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: { display: ['Nunito','sans-serif'], body: ['Poppins','sans-serif'] },
+      colors: {
+        primary: { 50:'#ecfdf5',100:'#d1fae5',200:'#a7f3d0',300:'#6ee7b7',400:'#34d399',500:'#10b981',600:'#059669',700:'#047857',800:'#065f46',900:'#064e3b' },
+        amber: { 50:'#fffbeb',100:'#fef3c7',200:'#fde68a',300:'#fcd34d',400:'#fbbf24',500:'#f59e0b',600:'#d97706' },
+        coral: { 400:'#f87171',500:'#ef4444',600:'#dc2626' },
+        teal: { 400:'#2dd4bf',500:'#14b8a6',600:'#0d9488' },
+        violet: { 400:'#a78bfa',500:'#8b5cf6',600:'#7c3aed' }
+      }
+    }
+  }
+}
+</script>
+<style>
+  :root {
+    --primary: #059669; --primary-light: #10b981; --primary-dark: #047857;
+    --amber: #f59e0b; --amber-dark: #d97706;
+    --coral: #ef4444; --teal: #14b8a6; --violet: #8b5cf6;
+    --bg: #FFFBEB; --fg: #1E293B; --muted: #64748B;
+    --card: #ffffff; --border: #e2e8f0;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family:'Poppins',sans-serif; color:var(--fg); background:var(--bg); overflow-x:hidden; }
+  h1,h2,h3,h4,h5,h6 { font-family:'Nunito',sans-serif; }
+
+  /* Animasi */
+  @keyframes float1 { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-25px) rotate(8deg)} }
+  @keyframes float2 { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-18px) rotate(-6deg)} }
+  @keyframes float3 { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-30px) scale(1.1)} }
+  @keyframes slideUp { from{opacity:0;transform:translateY(40px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+  @keyframes slideRight { from{transform:translateX(100%)} to{transform:translateX(0)} }
+  @keyframes slideLeft { from{transform:translateX(0)} to{transform:translateX(100%)} }
+  @keyframes toastIn { from{transform:translateX(120%);opacity:0} to{transform:translateX(0);opacity:1} }
+  @keyframes toastOut { from{transform:translateX(0);opacity:1} to{transform:translateX(120%);opacity:0} }
+  @keyframes pulse-ring { 0%{transform:scale(1);opacity:1} 100%{transform:scale(1.5);opacity:0} }
+  @keyframes gradientMove { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+
+  .anim-float1 { animation: float1 6s ease-in-out infinite; }
+  .anim-float2 { animation: float2 5s ease-in-out infinite 0.5s; }
+  .anim-float3 { animation: float3 7s ease-in-out infinite 1s; }
+  .anim-slide-up { animation: slideUp 0.6s ease-out forwards; }
+  .anim-fade-in { animation: fadeIn 0.5s ease-out forwards; }
+
+  .hero-bg {
+    background: linear-gradient(135deg, #059669, #0d9488, #0891b2, #059669);
+    background-size: 300% 300%;
+    animation: gradientMove 8s ease infinite;
+  }
+
+  /* Toast */
+  #toast-container { position:fixed; top:20px; right:20px; z-index:10000; display:flex; flex-direction:column; gap:10px; }
+  .toast { padding:14px 20px; border-radius:12px; color:#fff; font-size:14px; font-weight:500; min-width:280px; max-width:400px;
+    box-shadow:0 10px 40px rgba(0,0,0,0.15); animation:toastIn 0.4s ease; display:flex; align-items:center; gap:10px; }
+  .toast.success { background:linear-gradient(135deg,#059669,#10b981); }
+  .toast.error { background:linear-gradient(135deg,#dc2626,#ef4444); }
+  .toast.info { background:linear-gradient(135deg,#0d9488,#14b8a6); }
+  .toast.removing { animation:toastOut 0.3s ease forwards; }
+
+  /* Modal */
+  #modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.5); backdrop-filter:blur(4px); z-index:9000;
+    display:none; align-items:center; justify-content:center; padding:20px; }
+  #modal-overlay.active { display:flex; }
+  .modal-box { background:#fff; border-radius:16px; width:100%; max-width:600px; max-height:90vh; overflow-y:auto;
+    box-shadow:0 25px 60px rgba(0,0,0,0.2); animation:slideUp 0.3s ease; }
+
+  /* Scroll to top */
+  #scroll-top { position:fixed; bottom:30px; right:30px; width:48px; height:48px; border-radius:50%;
+    background:var(--primary); color:#fff; border:none; cursor:pointer; font-size:18px; z-index:8000;
+    box-shadow:0 4px 15px rgba(5,150,105,0.4); display:none; transition:all 0.3s; }
+  #scroll-top:hover { transform:translateY(-3px); box-shadow:0 6px 20px rgba(5,150,105,0.5); }
+  #scroll-top.visible { display:flex; align-items:center; justify-content:center; }
+
+  /* Mobile menu */
+  #mobile-menu { position:fixed; top:0; right:0; width:280px; height:100vh; background:#fff; z-index:8500;
+    box-shadow:-10px 0 40px rgba(0,0,0,0.15); transform:translateX(100%); transition:transform 0.3s ease; }
+  #mobile-menu.open { transform:translateX(0); }
+  #mobile-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:8400; display:none; }
+  #mobile-overlay.open { display:block; }
+
+  /* Admin sidebar mobile */
+  @media(max-width:768px) {
+    #admin-sidebar { position:fixed; top:0; left:0; height:100vh; z-index:8500; transform:translateX(-100%); transition:transform 0.3s ease; }
+    #admin-sidebar.open { transform:translateX(0); }
+    #admin-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:8400; display:none; }
+    #admin-overlay.open { display:block; }
+  }
+
+  /* Tabel admin */
+  .admin-table { width:100%; border-collapse:collapse; }
+  .admin-table th { background:#f1f5f9; padding:12px 16px; text-align:left; font-weight:600; font-size:13px;
+    text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); border-bottom:2px solid var(--border); }
+  .admin-table td { padding:12px 16px; border-bottom:1px solid var(--border); font-size:14px; vertical-align:middle; }
+  .admin-table tr:hover td { background:#f8fafc; }
+
+  /* Kartu berita */
+  .news-card { transition:all 0.3s ease; }
+  .news-card:hover { transform:translateY(-6px); box-shadow:0 12px 40px rgba(0,0,0,0.12); }
+
+  /* Galeri */
+  .gallery-item { overflow:hidden; border-radius:16px; position:relative; cursor:pointer; }
+  .gallery-item img { transition:transform 0.5s ease; width:100%; height:100%; object-fit:cover; }
+  .gallery-item:hover img { transform:scale(1.1); }
+  .gallery-item .overlay { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,0.7),transparent);
+    opacity:0; transition:opacity 0.3s; display:flex; align-items:flex-end; padding:16px; }
+  .gallery-item:hover .overlay { opacity:1; }
+
+  /* Input style */
+  .form-input { width:100%; padding:10px 14px; border:2px solid var(--border); border-radius:10px; font-family:'Poppins',sans-serif;
+    font-size:14px; transition:border-color 0.2s; outline:none; }
+  .form-input:focus { border-color:var(--primary); }
+  .form-label { display:block; font-size:13px; font-weight:600; color:var(--muted); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.3px; }
+  textarea.form-input { resize:vertical; min-height:100px; }
+  select.form-input { cursor:pointer; }
+
+  /* Nav aktif */
+  .nav-link { position:relative; transition:color 0.2s; }
+  .nav-link::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:3px; border-radius:2px;
+    background:var(--amber); transition:width 0.3s; }
+  .nav-link:hover::after, .nav-link.active::after { width:100%; }
+  .nav-link.active { color:var(--primary); font-weight:600; }
+
+  /* Badge kategori */
+  .badge { display:inline-block; padding:4px 12px; border-radius:20px; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; }
+  .badge-pengumuman { background:#fef3c7; color:#92400e; }
+  .badge-prestasi { background:#d1fae5; color:#065f46; }
+  .badge-berita { background:#e0e7ff; color:#3730a3; }
+  .badge-kegiatan { background:#fce7f3; color:#9d174d; }
+  .badge-fasilitas { background:#ffedd5; color:#9a3412; }
+
+  /* Guru card */
+  .guru-card { text-align:center; transition:all 0.3s; }
+  .guru-card:hover { transform:translateY(-4px); }
+  .guru-card img { width:100px; height:100px; border-radius:50%; object-fit:cover; border:4px solid var(--primary-light);
+    transition:border-color 0.3s; }
+  .guru-card:hover img { border-color:var(--amber); }
+
+  /* Stat card */
+  .stat-card { position:relative; overflow:hidden; }
+  .stat-card::before { content:''; position:absolute; top:-20px; right:-20px; width:80px; height:80px; border-radius:50%; opacity:0.15; }
+
+  @media(prefers-reduced-motion:reduce) {
+    *, *::before, *::after { animation-duration:0.01ms!important; transition-duration:0.01ms!important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== PUBLIC LAYOUT ==================== -->
+<div id="public-layout">
+  <!-- Header -->
+  <header id="main-header" class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-sm transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-16 md:h-18">
+      <a href="#beranda" class="flex items-center gap-3 no-underline">
+        <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center text-white font-display font-black text-lg md:text-xl shadow-lg" class="w-10 h-10 md:w-12 md:h-12 overflow-hidden rounded-xl shadow-lg bg-white flex items-center justify-center">
+                <img src="assets/img/logo.png" alt="Logo SDN Pekayon 03" class="w-full h-full object-contain p-1"></div>
+        <div>
+          <div class="font-display font-extrabold text-primary-700 text-sm md:text-base leading-tight">SD Negeri Pekayon 03</div>
+          <div class="text-[10px] md:text-xs text-gray-400 font-medium">Cerdas, Berkarakter, Berprestasi</div>
+        </div>
+      </a>
+      <nav class="hidden lg:flex items-center gap-8">
+        <a href="#beranda" class="nav-link text-sm font-medium text-gray-600 hover:text-primary-600 no-underline" data-nav="beranda">Beranda</a>
+        <a href="#profil" class="nav-link text-sm font-medium text-gray-600 hover:text-primary-600 no-underline" data-nav="profil">Profil</a>
+        <a href="#berita" class="nav-link text-sm font-medium text-gray-600 hover:text-primary-600 no-underline" data-nav="berita">Berita</a>
+        <a href="#galeri" class="nav-link text-sm font-medium text-gray-600 hover:text-primary-600 no-underline" data-nav="galeri">Galeri</a>
+        <a href="#kontak" class="nav-link text-sm font-medium text-gray-600 hover:text-primary-600 no-underline" data-nav="kontak">Kontak</a>
+        <a href="#login" class="bg-primary-600 hover:bg-primary-700 text-white text-sm font-semibold px-5 py-2 rounded-full transition no-underline">
+          <i class="fas fa-lock mr-1"></i> Admin
+        </a>
+      </nav>
+      <button id="hamburger-btn" class="lg:hidden w-10 h-10 flex items-center justify-center text-gray-600 text-xl" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-overlay"></div>
+  <div id="mobile-menu">
+    <div class="p-5 border-b border-gray-100 flex items-center justify-between">
+      <span class="font-display font-bold text-primary-700">Menu</span>
+      <button id="close-mobile-menu" class="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600" aria-label="Tutup menu"><i class="fas fa-times text-lg"></i></button>
+    </div>
+    <nav class="p-4 space-y-1">
+      <a href="#beranda" class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 hover:bg-primary-50 hover:text-primary-700 font-medium no-underline transition"><i class="fas fa-home w-6"></i> Beranda</a>
+      <a href="#profil" class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 hover:bg-primary-50 hover:text-primary-700 font-medium no-underline transition"><i class="fas fa-school w-6"></i> Profil</a>
+      <a href="#berita" class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 hover:bg-primary-50 hover:text-primary-700 font-medium no-underline transition"><i class="fas fa-newspaper w-6"></i> Berita</a>
+      <a href="#galeri" class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 hover:bg-primary-50 hover:text-primary-700 font-medium no-underline transition"><i class="fas fa-images w-6"></i> Galeri</a>
+      <a href="#kontak" class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 hover:bg-primary-50 hover:text-primary-700 font-medium no-underline transition"><i class="fas fa-envelope w-6"></i> Kontak</a>
+      <hr class="my-3">
+      <a href="#login" class="block px-4 py-3 rounded-lg bg-primary-600 text-white text-center font-semibold no-underline transition"><i class="fas fa-lock mr-2"></i> Login Admin</a>
+    </nav>
+  </div>
+
+  <!-- Public Content -->
+  <main id="public-content" class="min-h-screen"></main>
+
+  <!-- Footer -->
+  <footer class="bg-primary-900 text-white pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+        <div>
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-xl bg-primary-500 flex items-center justify-center font-display font-black text-lg">SD</div>
+            <div class="font-display font-extrabold text-lg">SD Negeri Pekayon 03</div>
+          </div>
+          <p class="text-primary-300 text-sm leading-relaxed mb-4">Membentuk generasi yang cerdas, berkarakter, dan berprestasi melalui pendidikan berkualitas.</p>
+          <div class="flex gap-3">
+            <a href="#" class="w-9 h-9 rounded-full bg-primary-700 hover:bg-amber-500 flex items-center justify-center transition" aria-label="Facebook"><i class="fab fa-facebook-f text-sm"></i></a>
+            <a href="#" class="w-9 h-9 rounded-full bg-primary-700 hover:bg-amber-500 flex items-center justify-center transition" aria-label="Instagram"><i class="fab fa-instagram text-sm"></i></a>
+            <a href="#" class="w-9 h-9 rounded-full bg-primary-700 hover:bg-amber-500 flex items-center justify-center transition" aria-label="YouTube"><i class="fab fa-youtube text-sm"></i></a>
+          </div>
+        </div>
+        <div>
+          <h4 class="font-display font-bold text-amber-400 mb-4">Tautan Cepat</h4>
+          <ul class="space-y-2 text-sm text-primary-300">
+            <li><a href="#beranda" class="hover:text-white transition no-underline text-primary-300">Beranda</a></li>
+            <li><a href="#profil" class="hover:text-white transition no-underline text-primary-300">Profil Sekolah</a></li>
+            <li><a href="#berita" class="hover:text-white transition no-underline text-primary-300">Berita & Pengumuman</a></li>
+            <li><a href="#galeri" class="hover:text-white transition no-underline text-primary-300">Galeri Kegiatan</a></li>
+            <li><a href="#kontak" class="hover:text-white transition no-underline text-primary-300">Hubungi Kami</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-display font-bold text-amber-400 mb-4">Program Unggulan</h4>
+          <ul class="space-y-2 text-sm text-primary-300">
+            <li><i class="fas fa-check-circle text-teal-400 mr-2"></i>Literasi Numerasi</li>
+            <li><i class="fas fa-check-circle text-teal-400 mr-2"></i>English Day</li>
+            <li><i class="fas fa-check-circle text-teal-400 mr-2"></i>Ekstrakurikuler</li>
+            <li><i class="fas fa-check-circle text-teal-400 mr-2"></i>Pramuka Siaga & Penggalang</li>
+            <li><i class="fas fa-check-circle text-teal-400 mr-2"></i>Seni & Budaya</li>
+            <li><i class="fas fa-check-circle text-teal-400 mr-2"></i>Adiwiyata Sekolah</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-display font-bold text-amber-400 mb-4">Kontak Kami</h4>
+          <ul class="space-y-3 text-sm text-primary-300">
+            <li class="flex items-start gap-3"><i class="fas fa-map-marker-alt text-coral-400 mt-1"></i><span>Jl. Gandaria I No. 1, Kec. Pasar Rebo, Kota Administrasi Jakarta Timur, DKI Jakarta 13710</span></li>
+            <li class="flex items-center gap-3"><i class="fas fa-phone text-teal-400"></i>(024) 123-4567</li>
+            <li class="flex items-center gap-3"><i class="fas fa-envelope text-violet-400"></i>sdnpekayon03pg@gmail.com</li>
+            <li class="flex items-center gap-3"><i class="fas fa-clock text-amber-400"></i>Senin - Jumat, 07:00 - 14:00</li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-primary-700 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-primary-400">
+        <span>&copy; 2025 SD Negeri Pekayon 03. Hak Cipta Dilindungi.</span>
+        <span>Dibuat dengan <i class="fas fa-heart text-coral-400"></i> untuk pendidikan Indonesia</span>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ==================== LOGIN LAYOUT ==================== -->
+<div id="login-layout" class="hidden min-h-screen flex items-center justify-center p-4" style="background:linear-gradient(135deg,#059669,#0d9488,#0891b2)">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8 anim-slide-up">
+    <div class="text-center mb-8">
+      <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-teal-500 flex items-center justify-center text-white font-display font-black text-2xl mx-auto mb-4 shadow-lg">SD</div>
+      <h2 class="font-display font-extrabold text-2xl text-gray-800">Panel Admin</h2>
+      <p class="text-gray-400 text-sm mt-1">Masuk untuk mengelola website sekolah</p>
+    </div>
+    <div id="login-error" class="hidden bg-red-50 border border-red-200 text-red-600 text-sm rounded-xl p-3 mb-4 text-center"></div>
+    <div class="space-y-4">
+      <div>
+        <label class="form-label">Username</label>
+        <input type="text" id="login-username" class="form-input" placeholder="Masukkan username" autocomplete="username">
+      </div>
+      <div>
+        <label class="form-label">Password</label>
+        <input type="password" id="login-password" class="form-input" placeholder="Masukkan password" autocomplete="current-password">
+      </div>
+      <button id="login-btn" class="w-full bg-gradient-to-r from-primary-600 to-teal-600 hover:from-primary-700 hover:to-teal-700 text-white font-semibold py-3 rounded-xl transition shadow-lg shadow-primary-500/25">
+        <i class="fas fa-sign-in-alt mr-2"></i>Masuk
+      </button>
+    </div>
+    <div class="mt-6 text-center">
+      <a href="#beranda" class="text-sm text-primary-600 hover:text-primary-700 no-underline font-medium"><i class="fas fa-arrow-left mr-1"></i> Kembali ke Beranda</a>
+    </div>
+    <div class="mt-4 bg-amber-50 border border-amber-200 rounded-xl p-3 text-center">
+      <p class="text-xs text-amber-700">Default: <strong>admin</strong> / <strong>admin123</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== ADMIN LAYOUT ==================== -->
+<div id="admin-layout" class="hidden min-h-screen bg-gray-50">
+  <div id="admin-overlay"></div>
+  <div class="flex">
+    <!-- Sidebar -->
+    <aside id="admin-sidebar" class="w-64 bg-gradient-to-b from-primary-800 to-primary-900 text-white min-h-screen fixed left-0 top-0 z-50 flex flex-col">
+      <div class="p-5 border-b border-primary-700/50">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-lg bg-amber-500 flex items-center justify-center font-display font-black text-sm shadow">SD</div>
+          <div>
+            <div class="font-display font-bold text-sm">Admin Panel</div>
+            <div class="text-primary-400 text-xs">SD Negeri Pekayon 03</div>
+          </div>
+        </div>
+      </div>
+      <nav class="flex-1 p-4 space-y-1 overflow-y-auto" id="admin-nav">
+        <a href="#admin" data-admin-nav="dashboard" class="admin-nav-link flex items-center gap-3 px-4 py-3 rounded-xl text-primary-300 hover:bg-primary-700/50 hover:text-white transition no-underline text-sm font-medium"><i class="fas fa-tachometer-alt w-5 text-center"></i> Dashboard</a>
+        <a href="#admin-berita" data-admin-nav="berita" class="admin-nav-link flex items-center gap-3 px-4 py-3 rounded-xl text-primary-300 hover:bg-primary-700/50 hover:text-white transition no-underline text-sm font-medium"><i class="fas fa-newspaper w-5 text-center"></i> Kelola Berita</a>
+        <a href="#admin-galeri" data-admin-nav="galeri" class="admin-nav-link flex items-center gap-3 px-4 py-3 rounded-xl text-primary-300 hover:bg-primary-700/50 hover:text-white transition no-underline text-sm font-medium"><i class="fas fa-images w-5 text-center"></i> Kelola Galeri</a>
+        <a href="#admin-guru" data-admin-nav="guru" class="admin-nav-link flex items-center gap-3 px-4 py-3 rounded-xl text-primary-300 hover:bg-primary-700/50 hover:text-white transition no-underline text-sm font-medium"><i class="fas fa-chalkboard-teacher w-5 text-center"></i> Kelola Guru</a>
+        <a href="#admin-kegiatan" data-admin-nav="kegiatan" class="admin-nav-link flex items-center gap-3 px-4 py-3 rounded-xl text-primary-300 hover:bg-primary-700/50 hover:text-white transition no-underline text-sm font-medium"><i class="fas fa-calendar-alt w-5 text-center"></i> Kelola Kegiatan</a>
+        <a href="#admin-data" data-admin-nav="data" class="admin-nav-link flex items-center gap-3 px-4 py-3 rounded-xl text-primary-300 hover:bg-primary-700/50 hover:text-white transition no-underline text-sm font-medium"><i class="fas fa-database w-5 text-center"></i> Export / Import</a>
+      </nav>
+      <div class="p-4 border-t border-primary-700/50 space-y-2">
+        <a href="#beranda" class="flex items-center gap-3 px-4 py-3 rounded-xl text-primary-300 hover:bg-primary-700/50 hover:text-white transition no-underline text-sm font-medium"><i class="fas fa-globe w-5 text-center"></i> Lihat Website</a>
+        <button id="logout-btn" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-coral-400 hover:bg-red-900/30 transition text-sm font-medium"><i class="fas fa-sign-out-alt w-5 text-center"></i> Keluar</button>
+      </div>
+    </aside>
+    <!-- Admin Main -->
+    <div class="flex-1 md:ml-64">
+      <header class="bg-white shadow-sm sticky top-0 z-40 px-4 md:px-8 h-16 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <button id="admin-hamburger" class="md:hidden w-10 h-10 flex items-center justify-center text-gray-600 text-lg" aria-label="Menu admin"><i class="fas fa-bars"></i></button>
+          <h1 id="admin-page-title" class="font-display font-bold text-lg text-gray-800">Dashboard</h1>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center text-primary-700 text-sm font-bold">A</div>
+          <span class="text-sm font-medium text-gray-600 hidden sm:inline">Administrator</span>
+        </div>
+      </header>
+      <main id="admin-content" class="p-4 md:p-8"></main>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Overlay -->
+<div id="modal-overlay" role="dialog" aria-modal="true">
+  <div class="modal-box" id="modal-box"></div>
+</div>
+
+<!-- Toast Container -->
+<div id="toast-container" aria-live="polite"></div>
+
+<!-- Scroll to Top -->
+<button id="scroll-top" aria-label="Kembali ke atas"><i class="fas fa-chevron-up"></i></button>
+
+<script>
+/* ========================================================
+   DATABASE - localStorage
+======================================================== */
+const DB = {
+  get(key) {
+    try {
+      const data = localStorage.getItem('sdn1_' + key);
+      return data ? JSON.parse(data) : [];
+    } catch(e) { return []; }
+  },
+  set(key, data) {
+    try { localStorage.setItem('sdn1_' + key, JSON.stringify(data)); } catch(e) { /* storage penuh */ }
+  },
+  getConfig(key, def) {
+    try {
+      const v = localStorage.getItem('sdn1_cfg_' + key);
+      return v !== null ? JSON.parse(v) : def;
+    } catch(e) { return def; }
+  },
+  setConfig(key, val) {
+    try { localStorage.setItem('sdn1_cfg_' + key, JSON.stringify(val)); } catch(e) {}
+  },
+  /* Seed data awal jika kosong */
+  init() {
+    if (this.get('berita').length > 0) return;
+    this.set('berita', [
+      { id:1, judul:'Penerimaan Murid Baru Tahun Ajaran 2025/2026', isi:'SD Negeri Pekayon 03 membuka pendaftaran Murid baru untuk tahun ajaran 2025/2026. Pendaftaran dibuka mulai 1 Mei hingga 30 Juni 2025. Persyaratan: fotokopi akta kelahiran, fotokopi Kartu Keluarga, pas foto 3x4 (4 lembar), dan usia minimal 6 tahun pada bulan Juli 2025. Untuk informasi lebih lanjut, hubungi panitia SPMB di sekolah.', gambar:'assets/img/spmb.png', tanggal:'2025-04-15', kategori:'pengumuman', penulis:'Admin' },
+      { id:2, judul:'Juara 1 Lomba Cerdas Cermat Tingkat Kecamatan', isi:'Siswa kelas 5 dan 6 SD Negeri Pekayon 03 berhasil meraih juara 1 dalam Lomba Cerdas Cermat tingkat Kecamatan Ceria yang diselenggarakan pada 10 Maret 2025. Tim yang terdiri dari Anisa, Budi, dan Cahya ini berhasil mengalahkan 12 sekolah lainnya. Selamat kepada para pemenang!', gambar:'assets/img/spmb.png', tanggal:'2025-03-11', kategori:'prestasi', penulis:'Admin' },
+      { id:3, judul:'Kegiatan Pramuka Tahunan: Jambore Tingkat Kecamatan', isi:'Regu pramuka penggalang SD Negeri Pekayon 03 mengikuti Jambore Pramuka Tingkat Kecamatan yang berlangsung selama 3 hari di Bumi Perkemahan Ceria Indah. Kegiatan ini diikuti oleh 200 peserta dari berbagai sekolah dasar. Regu kami berhasil meraih predikat regu terbaik.', gambar:'assets/img/spmb.png', tanggal:'2025-02-20', kategori:'berita', penulis:'Admin' },
+      { id:4, judul:'Upacara Peringatan Hari Pendidikan Nasional', isi:'SD Negeri Pekayon 03 mengadakan upacara bendera memperingati Hari Pendidikan Nasional 2 Mei 2025. Upacara diikuti seluruh siswa, guru, dan staf sekolah. Bapak Kepala Sekolah menyampaikan amanat tentang pentingnya pendidikan karakter dalam membentuk generasi emas Indonesia.', gambar:'assets/img/spmb.png', tanggal:'2025-05-02', kategori:'berita', penulis:'Admin' },
+      { id:5, judul:'Penghargaan Sekolah Adiwiyata Tingkat Kota', isi:'SD Negeri Pekayon 03 menerima penghargaan Sekolah Adiwiyata tingkat kota atas komitmen dalam menjaga lingkungan sekolah yang asri, bersih, dan ramah lingkungan. Program bank sampah, biopori, dan taman toga menjadi unggulan sekolah. Penghargaan diterima langsung oleh Kepala Sekolah di Balai Kota.', gambar:'assets/img/spmb.png', tanggal:'2025-04-05', kategori:'prestasi', penulis:'Admin' },
+      { id:6, judul:'Kunjungan Edukatif ke Museum Nasional', isi:'Siswa kelas 4 melakukan kunjungan edukatif ke Museum Nasional di Jakarta pada 25 Januari 2025. Kegiatan ini bertujuan memperkenalkan sejarah dan budaya Indonesia secara langsung kepada siswa. Para siswa sangat antusias melihat berbagai koleksi artefak dan peninggalan sejarah.', gambar:'assets/img/spmb.png', tanggal:'2025-01-26', kategori:'berita', penulis:'Admin' }
+    ]);
+    this.set('galeri', [
+      { id:1, judul:'Upacara Bendera', gambar:'assets/img/spmb.png', kategori:'kegiatan', tanggal:'2025-05-02' },
+      { id:2, judul:'Kegiatan Belajar di Kelas', gambar:'assets/img/spmb.png', kategori:'kegiatan', tanggal:'2025-04-10' },
+      { id:3, judul:'Pentas Seni Akhir Tahun', gambar:'assets/img/spmb.png', kategori:'kegiatan', tanggal:'2025-06-15' },
+      { id:4, judul:'Perpustakaan Sekolah', gambar:'assets/img/spmb.png', kategori:'fasilitas', tanggal:'2025-03-01' },
+      { id:5, judul:'Lab Komputer', gambar:'assets/img/spmb.png', kategori:'fasilitas', tanggal:'2025-03-01' },
+      { id:6, judul:'Lapangan Olahraga', gambar:'assets/img/spmb.png', kategori:'fasilitas', tanggal:'2025-03-01' },
+      { id:7, judul:'Penerimaan Trofi Juara', gambar:'assets/img/spmb.png', kategori:'prestasi', tanggal:'2025-03-11' },
+      { id:8, judul:'Kegiatan Pramuka', gambar:'assets/img/spmb.png', kategori:'kegiatan', tanggal:'2025-02-20' }
+    ]);
+    this.set('guru', [
+      { id:1, nama:'Ayik Sumirah, S.Pd', nip:'197505152000032001', jabatan:'Kepala Sekolah', mapel:'Manajemen Sekolah', foto:'assets/img/spmb.png', telepon:'081234567890' },
+      { id:2, nama:'Fitri Hariami, S.Pd', nip:'198203102005011002', jabatan:'Wali Kelas 6A', mapel:'Matematika', foto:'assets/img/spmb.png', telepon:'081234567891' },
+      { id:3, nama:'Nurhayati, S.Pd', nip:'198507222006042003', jabatan:'Wali Kelas 5B', mapel:'Bahasa Indonesia', foto:'assets/img/spmb.png', telepon:'081234567892' },
+      { id:4, nama:'Siswinarsih, S.Pd', nip:'198001152007011004', jabatan:'Wali Kelas 4A', mapel:'IPA', foto:'assets/img/spmb.png', telepon:'081234567893' },
+      { id:5, nama:'Ety Kusmiaty, S.Pd', nip:'198812302009012005', jabatan:'Wali Kelas 3B', mapel:'IPS', foto:'assets/img/spmb.png', telepon:'081234567894' },
+      { id:6, nama:'Rahmasari Dwimarta, S.Pd', nip:'199001152010011006', jabatan:'Guru Olahraga', mapel:'Penjaskes', foto:'assets/img/spmb.png', telepon:'081234567895' }
+    ]);
+    this.set('kegiatan', [
+      { id:1, nama:'Class Meeting Semester Genap', tanggal:'2025-06-20', waktu:'08:00 - 12:00', tempat:'Lapangan Sekolah', deskripsi:'Kegiatan class meeting yang meliputi berbagai lomba antar kelas: futsal, voli, tarik tambang, dan lomba cerdas cermat.', gambar:'assets/img/spmb.png' },
+      { id:2, nama:'Peringatan Maulid Nabi Muhammad SAW', tanggal:'2025-09-15', waktu:'08:00 - 10:00', tempat:'Aula Sekolah', deskripsi:'Peringatan Maulid Nabi dengan ceramah, pembacaan shalawat, dan pentas seni islami oleh siswa.', gambar:'assets/img/spmb.png' },
+      { id:3, nama:'Peringatan HUT RI ke-80', tanggal:'2025-08-17', waktu:'07:00 - 12:00', tempat:'Lapangan Sekolah', deskripsi:'Upacara bendera dan berbagai lomba memperingati Hari Kemerdekaan Republik Indonesia.', gambar:'assets/img/spmb.png' },
+      { id:4, nama:'Study Tour ke Taman Safari', tanggal:'2025-05-20', waktu:'06:00 - 16:00', tempat:'Taman Safari Indonesia', deskripsi:'Kunjungan edukatif ke Taman Safari untuk mempelajari keanekaragaman hayati dan pelestarian satwa.', gambar:'assets/img/spmb.png' }
+    ]);
+    this.setConfig('admin', { username:'admin', password:'admin123' });
+  },
+  nextId(key) {
+    const items = this.get(key);
+    if (items.length === 0) return 1;
+    return Math.max(...items.map(function(i){return i.id;})) + 1;
+  }
+};
+
+/* ========================================================
+   AUTH
+======================================================== */
+const Auth = {
+  isLoggedIn() { return this.getConfig('loggedIn', false); },
+  login(u, p) {
+    const cfg = DB.getConfig('admin', { username:'admin', password:'admin123' });
+    if (u === cfg.username && p === cfg.password) {
+      DB.setConfig('loggedIn', true);
+      return true;
+    }
+    return false;
+  },
+  logout() { DB.setConfig('loggedIn', false); },
+  getConfig(k, d) { return DB.getConfig(k, d); }
+};
+
+/* ========================================================
+   TOAST
+======================================================== */
+function showToast(msg, type) {
+  type = type || 'info';
+  var container = document.getElementById('toast-container');
+  var icons = { success:'fa-check-circle', error:'fa-exclamation-circle', info:'fa-info-circle' };
+  var el = document.createElement('div');
+  el.className = 'toast ' + type;
+  el.innerHTML = '<i class="fas ' + (icons[type]||icons.info) + '"></i><span>' + msg + '</span>';
+  container.appendChild(el);
+  setTimeout(function(){
+    el.classList.add('removing');
+    setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); }, 300);
+  }, 3000);
+}
+
+/* ========================================================
+   MODAL
+======================================================== */
+var modalOnSave = null;
+function openModal(title, bodyHtml, onSave) {
+  modalOnSave = onSave || null;
+  var box = document.getElementById('modal-box');
+  box.innerHTML = '<div class="flex items-center justify-between p-5 border-b border-gray-100">' +
+    '<h3 class="font-display font-bold text-lg text-gray-800">' + title + '</h3>' +
+    '<button onclick="closeModal()" class="w-8 h-8 rounded-lg hover:bg-gray-100 flex items-center justify-center text-gray-400 hover:text-gray-600 transition" aria-label="Tutup"><i class="fas fa-times"></i></button>' +
+    '</div>' +
+    '<div class="p-5">' + bodyHtml + '</div>' +
+    (modalOnSave ? '<div class="p-5 border-t border-gray-100 flex justify-end gap-3">' +
+    '<button onclick="closeModal()" class="px-5 py-2 rounded-xl border-2 border-gray-200 text-gray-600 font-medium text-sm hover:bg-gray-50 transition">Batal</button>' +
+    '<button id="modal-save-btn" class="px-5 py-2 rounded-xl bg-primary-600 hover:bg-primary-700 text-white font-medium text-sm transition shadow-lg shadow-primary-500/20">Simpan</button>' +
+    '</div>' : '');
+  document.getElementById('modal-overlay').classList.add('active');
+  if (modalOnSave) {
+    document.getElementById('modal-save-btn').addEventListener('click', function() {
+      if (modalOnSave) modalOnSave();
+    });
+  }
+}
+function openConfirmModal(msg, onYes) {
+  var box = document.getElementById('modal-box');
+  box.innerHTML = '<div class="p-8 text-center">' +
+    '<div class="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center mx-auto mb-4"><i class="fas fa-exclamation-triangle text-red-500 text-2xl"></i></div>' +
+    '<h3 class="font-display font-bold text-lg text-gray-800 mb-2">Konfirmasi</h3>' +
+    '<p class="text-gray-500 text-sm mb-6">' + msg + '</p>' +
+    '<div class="flex justify-center gap-3">' +
+    '<button onclick="closeModal()" class="px-6 py-2 rounded-xl border-2 border-gray-200 text-gray-600 font-medium text-sm hover:bg-gray-50 transition">Tidak</button>' +
+    '<button id="modal-confirm-yes" class="px-6 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-medium text-sm transition">Ya, Hapus</button>' +
+    '</div></div>';
+  document.getElementById('modal-overlay').classList.add('active');
+  document.getElementById('modal-confirm-yes').addEventListener('click', function() { closeModal(); onYes(); });
+}
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('active');
+  modalOnSave = null;
+}
+document.getElementById('modal-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+/* ========================================================
+   UTILITAS
+======================================================== */
+function formatDate(str) {
+  if (!str) return '-';
+  var d = new Date(str);
+  var bulan = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+  return d.getDate() + ' ' + bulan[d.getMonth()] + ' ' + d.getFullYear();
+}
+function truncate(str, len) {
+  if (!str) return '';
+  return str.length > len ? str.substring(0, len) + '...' : str;
+}
+function escapeHtml(str) {
+  if (!str) return '';
+  var div = document.createElement('div');
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
+}
+function todayStr() {
+  var d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+
+/* ========================================================
+   ROUTER
+======================================================== */
+function showLayout(name) {
+  document.getElementById('public-layout').classList.toggle('hidden', name !== 'public');
+  document.getElementById('login-layout').classList.toggle('hidden', name !== 'login');
+  document.getElementById('admin-layout').classList.toggle('hidden', name !== 'admin');
+  if (name === 'login') {
+    document.getElementById('login-layout').style.display = 'flex';
+  } else {
+    document.getElementById('login-layout').style.display = '';
+  }
+}
+
+function navigate(hash) {
+  window.location.hash = hash;
+}
+
+function handleRoute() {
+  var hash = window.location.hash.slice(1) || 'beranda';
+  closeMobileMenu();
+  closeAdminSidebar();
+
+  /* Admin routes */
+  if (hash === 'admin' || hash.startsWith('admin-')) {
+    if (!Auth.isLoggedIn()) { navigate('login'); return; }
+    showLayout('admin');
+    renderAdminPage(hash);
+    updateAdminNav(hash);
+    return;
+  }
+  if (hash === 'login') {
+    showLayout('login');
+    document.getElementById('login-username').value = '';
+    document.getElementById('login-password').value = '';
+    document.getElementById('login-error').classList.add('hidden');
+    return;
+  }
+
+  showLayout('public');
+  updatePublicNav(hash);
+
+  if (hash.startsWith('berita-detail-')) {
+    var id = parseInt(hash.replace('berita-detail-',''));
+    renderBeritaDetail(id);
+    return;
+  }
+  switch(hash) {
+    case 'beranda': renderBeranda(); break;
+    case 'profil': renderProfil(); break;
+    case 'berita': renderBerita(); break;
+    case 'galeri': renderGaleri(); break;
+    case 'kontak': renderKontak(); break;
+    default: renderBeranda();
+  }
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function updatePublicNav(hash) {
+  document.querySelectorAll('[data-nav]').forEach(function(el) {
+    el.classList.toggle('active', el.dataset.nav === hash);
+  });
+}
+function updateAdminNav(hash) {
+  var page = hash === 'admin' ? 'dashboard' : hash.replace('admin-','');
+  document.querySelectorAll('[data-admin-nav]').forEach(function(el) {
+    var isActive = el.dataset.adminNav === page;
+    el.classList.toggle('bg-primary-700/50', isActive);
+    el.classList.toggle('text-white', isActive);
+  });
+  var titles = { dashboard:'Dashboard', berita:'Kelola Berita', galeri:'Kelola Galeri', guru:'Kelola Guru', kegiatan:'Kelola Kegiatan', data:'Export / Import Data' };
+  document.getElementById('admin-page-title').textContent = titles[page] || 'Dashboard';
+}
+
+/* ========================================================
+   MOBILE MENU
+======================================================== */
+function openMobileMenu() {
+  document.getElementById('mobile-menu').classList.add('open');
+  document.getElementById('mobile-overlay').classList.add('open');
+}
+function closeMobileMenu() {
+  document.getElementById('mobile-menu').classList.remove('open');
+  document.getElementById('mobile-overlay').classList.remove('open');
+}
+document.getElementById('hamburger-btn').addEventListener('click', openMobileMenu);
+document.getElementById('close-mobile-menu').addEventListener('click', closeMobileMenu);
+document.getElementById('mobile-overlay').addEventListener('click', closeMobileMenu);
+document.querySelectorAll('.mobile-nav-link').forEach(function(el) {
+  el.addEventListener('click', closeMobileMenu);
+});
+
+/* Admin sidebar mobile */
+function closeAdminSidebar() {
+  document.getElementById('admin-sidebar').classList.remove('open');
+  document.getElementById('admin-overlay').classList.remove('open');
+}
+document.getElementById('admin-hamburger').addEventListener('click', function() {
+  document.getElementById('admin-sidebar').classList.toggle('open');
+  document.getElementById('admin-overlay').classList.toggle('open');
+});
+document.getElementById('admin-overlay').addEventListener('click', closeAdminSidebar);
+
+/* ========================================================
+   SCROLL TO TOP
+======================================================== */
+window.addEventListener('scroll', function() {
+  document.getElementById('scroll-top').classList.toggle('visible', window.scrollY > 300);
+});
+document.getElementById('scroll-top').addEventListener('click', function() {
+  window.scrollTo({top:0, behavior:'smooth'});
+});
+
+/* ========================================================
+   LOGIN
+======================================================== */
+document.getElementById('login-btn').addEventListener('click', function() {
+  var u = document.getElementById('login-username').value.trim();
+  var p = document.getElementById('login-password').value.trim();
+  var errEl = document.getElementById('login-error');
+  if (!u || !p) {
+    errEl.textContent = 'Username dan password tidak boleh kosong.';
+    errEl.classList.remove('hidden');
+    return;
+  }
+  if (Auth.login(u, p)) {
+    errEl.classList.add('hidden');
+    showToast('Login berhasil! Selamat datang.', 'success');
+    navigate('admin');
+  } else {
+    errEl.textContent = 'Username atau password salah.';
+    errEl.classList.remove('hidden');
+  }
+});
+document.getElementById('login-password').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') document.getElementById('login-btn').click();
+});
+document.getElementById('login-username').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') document.getElementById('login-password').focus();
+});
+document.getElementById('logout-btn').addEventListener('click', function() {
+  Auth.logout();
+  showToast('Berhasil keluar dari panel admin.', 'info');
+  navigate('beranda');
+});
+
+/* ========================================================
+   PUBLIC: BERANDA
+======================================================== */
+function renderBeranda() {
+  var berita = DB.get('berita').slice(0, 3);
+  var galeri = DB.get('galeri').slice(0, 6);
+  var guru = DB.get('guru').slice(0, 4);
+
+  var html = '' +
+  /* Hero */
+  '<section class="hero-bg relative min-h-[600px] md:min-h-[650px] flex items-center overflow-hidden pt-16">' +
+    '<div class="absolute w-24 h-24 rounded-full bg-yellow-400/20 top-24 left-[10%] anim-float1"></div>' +
+    '<div class="absolute w-16 h-16 rounded-full bg-red-400/20 top-40 right-[15%] anim-float2"></div>' +
+    '<div class="absolute w-20 h-20 rounded-xl bg-violet-400/15 bottom-20 left-[20%] anim-float3 rotate-12"></div>' +
+    '<div class="absolute w-12 h-12 rounded-full bg-amber-300/25 bottom-40 right-[25%] anim-float1" style="animation-delay:1s"></div>' +
+    '<div class="absolute w-32 h-32 rounded-full bg-teal-300/10 -top-10 right-[5%] anim-float2" style="animation-delay:2s"></div>' +
+    '<div class="relative z-10 max-w-7xl mx-auto px-4 py-16 md:py-20">' +
+      '<div class="max-w-2xl">' +
+        '<div class="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm text-white/90 text-sm font-medium px-4 py-2 rounded-full mb-6 border border-white/20">' +
+          '<i class="fas fa-star text-amber-300"></i> TRIBER SCHOOL (Berkualitas Bersih Berkarakter)' +
+        '</div>' +
+        '<h1 class="font-display font-black text-4xl md:text-6xl text-white leading-tight"><span class="block">SD Negeri Pekayon 03</span><span class="block text-2xl md:text-4xl text-amber-300 mt-2">BERSERI <span class="text-amber">(Berprestasi Setiap Hari)</span></span></h1><br></br>' +
+        '<p class="text-lg md:text-xl text-white/85 mb-8 leading-relaxed">Membentuk generasi cerdas, berkarakter, dan berprestasi melalui pendidikan berkualitas dan lingkungan belajar yang menyenangkan.</p>' +
+        '<div class="flex flex-wrap gap-4">' +
+          '<a href="#profil" class="bg-amber-500 hover:bg-amber-600 text-white px-8 py-3.5 rounded-full font-semibold transition shadow-lg shadow-amber-500/30 no-underline text-sm md:text-base"><i class="fas fa-school mr-2"></i>Profil Sekolah</a>' +
+          '<a href="#kontak" class="bg-white/15 hover:bg-white/25 text-white px-8 py-3.5 rounded-full font-semibold border-2 border-white/30 transition no-underline text-sm md:text-base"><i class="fas fa-phone mr-2"></i>Hubungi Kami</a>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+  '</section>' +
+
+  /* Statistik */
+  '<section class="relative -mt-16 z-20 max-w-7xl mx-auto px-4 mb-16">' +
+    '<div class="grid grid-cols-2 md:grid-cols-4 gap-4">' +
+      statCard('fa-user-graduate', '447+', 'Siswa Aktif', 'from-emerald-500 to-teal-500', 'bg-emerald-500/10') +
+      statCard('fa-chalkboard-teacher', '16', 'Tenaga Pendidik & Kependidikan', 'from-amber-500 to-orange-500', 'bg-amber-500/10') +
+      statCard('fa-door-open', '7', 'Ruang Kelas', 'from-violet-500 to-purple-500', 'bg-violet-500/10') +
+      statCard('fa-trophy', '100+', 'Prestasi Diraih', 'from-red-500 to-pink-500', 'bg-red-500/10') +
+    '</div>' +
+  '</section>' +
+
+  /* Berita Terbaru */
+  '<section class="max-w-7xl mx-auto px-4 mb-20">' +
+    '<div class="text-center mb-10">' +
+      '<span class="inline-block bg-primary-100 text-primary-700 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-3">Terkini</span>' +
+      '<h2 class="font-display font-extrabold text-3xl md:text-4xl text-gray-800">Berita & Pengumuman</h2>' +
+      '<div class="w-20 h-1.5 bg-gradient-to-r from-amber-400 to-amber-500 rounded-full mx-auto mt-4"></div>' +
+    '</div>' +
+    '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">' +
+      berita.map(function(b){ return newsCard(b); }).join('') +
+    '</div>' +
+    '<div class="text-center mt-8">' +
+      '<a href="#berita" class="inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-full font-semibold text-sm transition shadow-lg shadow-primary-500/20 no-underline">Lihat Semua Berita <i class="fas fa-arrow-right"></i></a>' +
+    '</div>' +
+  '</section>' +
+
+  /* Galeri Preview */
+  '<section class="bg-white py-20 mb-0">' +
+    '<div class="max-w-7xl mx-auto px-4">' +
+      '<div class="text-center mb-10">' +
+        '<span class="inline-block bg-teal-100 text-teal-700 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-3">Galeri</span>' +
+        '<h2 class="font-display font-extrabold text-3xl md:text-4xl text-gray-800">Momen Kegiatan Kami</h2>' +
+        '<div class="w-20 h-1.5 bg-gradient-to-r from-teal-400 to-teal-500 rounded-full mx-auto mt-4"></div>' +
+      '</div>' +
+      '<div class="grid grid-cols-2 md:grid-cols-3 gap-4">' +
+        galeri.map(function(g){ return galleryItem(g); }).join('') +
+      '</div>' +
+      '<div class="text-center mt-8">' +
+        '<a href="#galeri" class="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded-full font-semibold text-sm transition shadow-lg shadow-teal-500/20 no-underline">Lihat Galeri Lengkap <i class="fas fa-arrow-right"></i></a>' +
+      '</div>' +
+    '</div>' +
+  '</section>' +
+
+  /* Guru Preview */
+  '<section class="max-w-7xl mx-auto px-4 py-20">' +
+    '<div class="text-center mb-10">' +
+      '<span class="inline-block bg-violet-100 text-violet-700 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-3">Tenaga Pendidik & Kependidikan</span>' +
+      '<h2 class="font-display font-extrabold text-3xl md:text-4xl text-gray-800">Guru-Guru Kami</h2>' +
+      '<div class="w-20 h-1.5 bg-gradient-to-r from-violet-400 to-violet-500 rounded-full mx-auto mt-4"></div>' +
+    '</div>' +
+    '<div class="grid grid-cols-2 md:grid-cols-4 gap-6">' +
+      guru.map(function(g){ return guruCard(g); }).join('') +
+    '</div>' +
+  '</section>' +
+
+  /* CTA */
+  '<section class="relative overflow-hidden" style="background:linear-gradient(135deg,#d97706,#f59e0b,#fbbf24)">' +
+    '<div class="absolute w-40 h-40 rounded-full bg-white/10 -top-10 -left-10"></div>' +
+    '<div class="absolute w-60 h-60 rounded-full bg-white/5 -bottom-20 -right-20"></div>' +
+    '<div class="relative z-10 max-w-4xl mx-auto px-4 py-16 text-center">' +
+      '<h2 class="font-display font-extrabold text-3xl md:text-4xl text-white mb-4">Bergabunglah Bersama Kami!</h2>' +
+      '<p class="text-white/85 text-lg mb-8 max-w-2xl mx-auto">Daftarkan putra-putri Anda di SD Negeri Pekayon 03 dan berikan pendidikan terbaik untuk masa depan mereka.</p>' +
+      '<div class="flex flex-wrap justify-center gap-4">' +
+        '<a href="#kontak" class="bg-white text-amber-700 px-8 py-3.5 rounded-full font-bold text-sm hover:bg-gray-100 transition shadow-lg no-underline"><i class="fas fa-phone mr-2"></i>Hubungi Kami</a>' +
+        '<a href="#berita" class="bg-amber-800/30 hover:bg-amber-800/50 text-white px-8 py-3.5 rounded-full font-bold text-sm border-2 border-white/30 transition no-underline"><i class="fas fa-info-circle mr-2"></i>Info SPMB</a>' +
+      '</div>' +
+    '</div>' +
+  '</section>';
+
+  document.getElementById('public-content').innerHTML = html;
+  animateCounters();
+}
+
+function statCard(icon, value, label, gradient, bgColor) {
+  return '<div class="stat-card bg-white rounded-2xl p-5 md:p-6 shadow-lg shadow-gray-200/50 border border-gray-100 text-center">' +
+    '<div class="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-gradient-to-br ' + gradient + ' flex items-center justify-center mx-auto mb-3 shadow-lg">' +
+    '<i class="fas ' + icon + ' text-white text-lg md:text-xl"></i></div>' +
+    '<div class="font-display font-black text-2xl md:text-3xl text-gray-800 counter" data-target="' + value.replace('+','') + '">' + value + '</div>' +
+    '<div class="text-gray-500 text-xs md:text-sm font-medium mt-1">' + label + '</div></div>';
+}
+
+function newsCard(b) {
+  return '<article class="news-card bg-white rounded-2xl overflow-hidden shadow-md shadow-gray-200/50 border border-gray-100 cursor-pointer" data-action="view-berita" data-id="' + b.id + '">' +
+    '<div class="relative overflow-hidden h-48"><img src="' + b.gambar + '" alt="' + escapeHtml(b.judul) + '" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">' +
+    '<div class="absolute top-3 left-3"><span class="badge badge-' + b.kategori + '">' + b.kategori + '</span></div></div>' +
+    '<div class="p-5">' +
+    '<div class="text-xs text-gray-400 mb-2"><i class="far fa-calendar mr-1"></i>' + formatDate(b.tanggal) + '</div>' +
+    '<h3 class="font-display font-bold text-gray-800 mb-2 leading-snug line-clamp-2">' + escapeHtml(b.judul) + '</h3>' +
+    '<p class="text-gray-500 text-sm leading-relaxed line-clamp-2">' + truncate(escapeHtml(b.isi), 100) + '</p>' +
+    '<div class="mt-4 text-primary-600 text-sm font-semibold hover:text-primary-700">Baca Selengkapnya <i class="fas fa-arrow-right ml-1 text-xs"></i></div>' +
+    '</div></article>';
+}
+
+function galleryItem(g) {
+  return '<div class="gallery-item aspect-[4/3] rounded-2xl" data-action="view-gallery" data-id="' + g.id + '">' +
+    '<img src="' + g.gambar + '" alt="' + escapeHtml(g.judul) + '" loading="lazy">' +
+    '<div class="overlay rounded-2xl"><span class="text-white font-semibold text-sm">' + escapeHtml(g.judul) + '</span></div></div>';
+}
+
+function guruCard(g) {
+  return '<div class="guru-card bg-white rounded-2xl p-6 shadow-md shadow-gray-200/50 border border-gray-100">' +
+    '<img src="' + g.foto + '" alt="' + escapeHtml(g.nama) + '" loading="lazy">' +
+    '<h4 class="font-display font-bold text-gray-800 mt-3 text-sm">' + escapeHtml(g.nama) + '</h4>' +
+    '<p class="text-primary-600 text-xs font-medium mt-1">' + escapeHtml(g.jabatan) + '</p>' +
+    '<p class="text-gray-400 text-xs mt-0.5">' + escapeHtml(g.mapel) + '</p></div>';
+}
+
+function animateCounters() {
+  document.querySelectorAll('.counter').forEach(function(el) {
+    var target = parseInt(el.dataset.target);
+    if (isNaN(target)) return;
+    var start = 0;
+    var duration = 1500;
+    var step = Math.max(1, Math.ceil(target / (duration / 16)));
+    var timer = setInterval(function() {
+      start += step;
+      if (start >= target) {
+        el.textContent = target + '+';
+        clearInterval(timer);
+      } else {
+        el.textContent = start;
+      }
+    }, 16);
+  });
+}
+
+/* ========================================================
+   PUBLIC: PROFIL
+======================================================== */
+function renderProfil() {
+  var html = '' +
+  '<section class="hero-bg pt-24 pb-16">' +
+    '<div class="max-w-7xl mx-auto px-4 text-center">' +
+      '<h1 class="font-display font-black text-4xl md:text-5xl text-white mb-3">Profil Sekolah</h1>' +
+      '<p class="text-white/75 text-lg">Mengenal lebih dekat SD Negeri Pekayon 03</p>' +
+    '</div>' +
+  '</section>' +
+
+  '<section class="max-w-5xl mx-auto px-4 py-16">' +
+    '<div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">' +
+      '<div class="bg-gradient-to-r from-primary-600 to-teal-600 p-8 text-center">' +
+        '<h2 class="font-display font-extrabold text-3xl text-white mb-2">Visi</h2>' +
+        '<p class="text-white/90 text-lg max-w-3xl mx-auto leading-relaxed">"Terwujudnya Murid yang cerdas, beriman, berakhlak mulia, dan berwawasan lingkungan"</p>' +
+      '</div>' +
+      '<div class="p-8">' +
+        '<h2 class="font-display font-extrabold text-2xl text-gray-800 mb-6 text-center">Misi</h2>' +
+        '<div class="grid grid-cols-1 md:grid-cols-2 gap-4">' +
+          misiItem('Melaksanakan pembelajaran yang aktif, inovatif, kreatif, efektif, dan menyenangkan (PAIKEM)') +
+          misiItem('Membentuk Murid yang beriman dan berakhlak mulia melalui keteladanan') +
+          misiItem('Mengembangkan potensi Murid melalui kegiatan ekstrakurikuler') +
+          misiItem('Menjalin kerjasama yang baik dengan orang tua dan masyarakat') +
+          misiItem('Menciptakan lingkungan sekolah yang bersih, asri, dan nyaman (Adiwiyata)') +
+          misiItem('Meningkatkan kompetensi guru melalui kegiatan pengembangan profesional') +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+  '</section>' +
+
+  '<section class="bg-white py-16">' +
+    '<div class="max-w-5xl mx-auto px-4">' +
+      '<div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">' +
+        '<div><img src="https://picsum.photos/seed/sdsejarah/600/400" alt="Sejarah Sekolah" class="rounded-2xl shadow-lg w-full" loading="lazy"></div>' +
+        '<div>' +
+          '<span class="inline-block bg-amber-100 text-amber-700 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-4">Sejarah</span>' +
+          '<h2 class="font-display font-extrabold text-3xl text-gray-800 mb-4">Sejarah Singkat</h2>' +
+          '<p class="text-gray-600 leading-relaxed mb-3">SD Negeri Pekayon 03 didirikan pada tahun 1978 sebagai salah satu sekolah dasar negeri pertama di Kecamatan Pasar Rebo. Pada awalnya, sekolah ini hanya memiliki 3 ruang kelas dengan 60 siswa.</p>' +
+          '<p class="text-gray-600 leading-relaxed mb-3">Seiring berjalannya waktu, SD Negeri Pekayon 03 terus berkembang dan meningkatkan kualitas pendidikannya. Kini sekolah memiliki 12 ruang kelas, berbagai fasilitas penunjang, dan lebih dari 320 siswa aktif.</p>' +
+          '<p class="text-gray-600 leading-relaxed">Berbagai prestasi telah diraih, baik di tingkat kecamatan, kota, maupun provinsi. Sekolah ini juga telah meraih predikat Sekolah Adiwiyata sebagai pengakuan atas komitmen dalam pelestarian lingkungan.</p>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+  '</section>' +
+
+  '<section class="max-w-5xl mx-auto px-4 py-16">' +
+    '<div class="text-center mb-10">' +
+      '<span class="inline-block bg-violet-100 text-violet-700 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-3">Organisasi</span>' +
+      '<h2 class="font-display font-extrabold text-3xl text-gray-800">Struktur Organisasi</h2>' +
+      '<div class="w-20 h-1.5 bg-gradient-to-r from-violet-400 to-violet-500 rounded-full mx-auto mt-4"></div>' +
+    '</div>' +
+    '<div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-8">' +
+      '<div class="space-y-4">' +
+        orgItem('Kepala Sekolah', 'Ayik Sumirah, S.Pd', 'fa-crown', 'from-amber-500 to-orange-500') +
+        orgItem('Wakil Kepala Sekolah Kurikulum', 'Ahmad Fauzi, S.Pd', 'fa-book', 'from-primary-500 to-teal-500') +
+        orgItem('Wakil Kepala Sekolah Kesiswaan', 'Dewi Sartika, S.Pd', 'fa-users', 'from-violet-500 to-purple-500') +
+        orgItem('Wakil Kepala Sekolah Sarpras', 'Budi Santoso, S.Pd', 'fa-building', 'from-red-500 to-pink-500') +
+        orgItem('Koordinator Kelas 1-3', 'Rina Wati, S.Pd', 'fa-child', 'from-teal-500 to-cyan-500') +
+        orgItem('Koordinator Kelas 4-6', 'Hendra Wijaya, S.Pd', 'fa-child', 'from-teal-500 to-cyan-500') +
+      '</div>' +
+    '</div>' +
+  '</section>';
+
+  document.getElementById('public-content').innerHTML = html;
+}
+
+function misiItem(text) {
+  return '<div class="flex items-start gap-3 p-4 bg-primary-50 rounded-xl border border-primary-100">' +
+    '<div class="w-8 h-8 rounded-lg bg-primary-600 flex items-center justify-center flex-shrink-0 mt-0.5"><i class="fas fa-check text-white text-xs"></i></div>' +
+    '<p class="text-gray-700 text-sm leading-relaxed">' + text + '</p></div>';
+}
+function orgItem(jabatan, nama, icon, gradient) {
+  return '<div class="flex items-center gap-4 p-4 rounded-xl bg-gray-50 hover:bg-gray-100 transition">' +
+    '<div class="w-12 h-12 rounded-xl bg-gradient-to-br ' + gradient + ' flex items-center justify-center flex-shrink-0 shadow"><i class="fas ' + icon + ' text-white"></i></div>' +
+    '<div><div class="font-display font-bold text-gray-800 text-sm">' + jabatan + '</div><div class="text-gray-500 text-sm">' + nama + '</div></div></div>';
+}
+
+/* ========================================================
+   PUBLIC: BERITA
+======================================================== */
+function renderBerita() {
+  var berita = DB.get('berita');
+  var html = '' +
+  '<section class="hero-bg pt-24 pb-16">' +
+    '<div class="max-w-7xl mx-auto px-4 text-center">' +
+      '<h1 class="font-display font-black text-4xl md:text-5xl text-white mb-3">Berita & Pengumuman</h1>' +
+      '<p class="text-white/75 text-lg">Informasi terkini dari SD Negeri Pekayon 03</p>' +
+    '</div>' +
+  '</section>' +
+  '<section class="max-w-7xl mx-auto px-4 py-12">' +
+    '<div class="flex flex-wrap gap-3 mb-8 justify-center" id="berita-filters">' +
+      '<button class="berita-filter active px-5 py-2 rounded-full text-sm font-semibold transition" data-filter="all">Semua</button>' +
+      '<button class="berita-filter px-5 py-2 rounded-full text-sm font-semibold transition" data-filter="pengumuman">Pengumuman</button>' +
+      '<button class="berita-filter px-5 py-2 rounded-full text-sm font-semibold transition" data-filter="berita">Berita</button>' +
+      '<button class="berita-filter px-5 py-2 rounded-full text-sm font-semibold transition" data-filter="prestasi">Prestasi</button>' +
+    '</div>' +
+    '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="berita-grid">' +
+      berita.map(function(b){ return newsCard(b); }).join('') +
+    '</div>' +
+    (berita.length === 0 ? '<div class="text-center py-16 text-gray-400"><i class="fas fa-newspaper text-5xl mb-4 block"></i><p class="text-lg">Belum ada berita.</p></div>' : '') +
+  '</section>';
+  document.getElementById('public-content').innerHTML = html;
+  initBeritaFilters();
+}
+
+function initBeritaFilters() {
+  document.querySelectorAll('.berita-filter').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.berita-filter').forEach(function(b){ b.classList.remove('active','bg-primary-600','text-white'); b.classList.add('bg-gray-100','text-gray-600'); });
+      this.classList.add('active','bg-primary-600','text-white');
+      this.classList.remove('bg-gray-100','text-gray-600');
+      var filter = this.dataset.filter;
+      var berita = DB.get('berita');
+      if (filter !== 'all') berita = berita.filter(function(b){ return b.kategori === filter; });
+      document.getElementById('berita-grid').innerHTML = berita.length > 0 ? berita.map(function(b){ return newsCard(b); }).join('') :
+        '<div class="col-span-full text-center py-12 text-gray-400"><p>Tidak ada berita untuk kategori ini.</p></div>';
+      /* re-attach delegation sudah otomatis via parent */
+    });
+  });
+  /* Set initial active style */
+  var activeFilter = document.querySelector('.berita-filter.active');
+  if (activeFilter) { activeFilter.classList.add('bg-primary-600','text-white'); activeFilter.classList.remove('bg-gray-100','text-gray-600'); }
+  document.querySelectorAll('.berita-filter:not(.active)').forEach(function(b){ b.classList.add('bg-gray-100','text-gray-600'); });
+}
+
+function renderBeritaDetail(id) {
+  var berita = DB.get('berita');
+  var item = berita.find(function(b){ return b.id === id; });
+  if (!item) {
+    document.getElementById('public-content').innerHTML = '<div class="min-h-[60vh] flex items-center justify-center"><div class="text-center"><i class="fas fa-exclamation-circle text-6xl text-gray-300 mb-4"></i><h2 class="font-display font-bold text-2xl text-gray-400">Berita tidak ditemukan</h2><a href="#berita" class="text-primary-600 font-medium mt-4 inline-block">Kembali ke Berita</a></div></div>';
+    return;
+  }
+  var otherBerita = berita.filter(function(b){ return b.id !== id; }).slice(0,3);
+  var html = '' +
+  '<section class="pt-24 pb-8 bg-gray-50">' +
+    '<div class="max-w-4xl mx-auto px-4">' +
+      '<a href="#berita" class="inline-flex items-center gap-2 text-primary-600 hover:text-primary-700 font-medium text-sm mb-6 no-underline"><i class="fas fa-arrow-left"></i> Kembali ke Berita</a>' +
+      '<span class="badge badge-' + item.kategori + ' mb-3">' + item.kategori + '</span>' +
+      '<h1 class="font-display font-extrabold text-3xl md:text-4xl text-gray-800 leading-tight mb-3">' + escapeHtml(item.judul) + '</h1>' +
+      '<div class="flex items-center gap-4 text-sm text-gray-400"><span><i class="far fa-calendar mr-1"></i>' + formatDate(item.tanggal) + '</span><span><i class="far fa-user mr-1"></i>' + escapeHtml(item.penulis) + '</span></div>' +
+    '</div>' +
+  '</section>' +
+  '<section class="max-w-4xl mx-auto px-4 py-8">' +
+    '<img src="' + item.gambar + '" alt="' + escapeHtml(item.judul) + '" class="w-full rounded-2xl shadow-lg mb-8" loading="lazy">' +
+    '<div class="prose max-w-none text-gray-600 leading-relaxed text-base whitespace-pre-line">' + escapeHtml(item.isi) + '</div>' +
+  '</section>' +
+  (otherBerita.length > 0 ? '<section class="bg-white py-12"><div class="max-w-7xl mx-auto px-4"><h3 class="font-display font-bold text-xl text-gray-800 mb-6">Berita Lainnya</h3><div class="grid grid-cols-1 md:grid-cols-3 gap-6">' + otherBerita.map(function(b){ return newsCard(b); }).join('') + '</div></div></section>' : '');
+
+  document.getElementById('public-content').innerHTML = html;
+}
+
+/* ========================================================
+   PUBLIC: GALERI
+======================================================== */
+function renderGaleri() {
+  var galeri = DB.get('galeri');
+  var html = '' +
+  '<section class="hero-bg pt-24 pb-16">' +
+    '<div class="max-w-7xl mx-auto px-4 text-center">' +
+      '<h1 class="font-display font-black text-4xl md:text-5xl text-white mb-3">Galeri Kegiatan</h1>' +
+      '<p class="text-white/75 text-lg">Dokumentasi momen berharga di SD Negeri Pekayon 03</p>' +
+    '</div>' +
+  '</section>' +
+  '<section class="max-w-7xl mx-auto px-4 py-12">' +
+    '<div class="flex flex-wrap gap-3 mb-8 justify-center" id="galeri-filters">' +
+      '<button class="galeri-filter active px-5 py-2 rounded-full text-sm font-semibold transition" data-filter="all">Semua</button>' +
+      '<button class="galeri-filter px-5 py-2 rounded-full text-sm font-semibold transition" data-filter="kegiatan">Kegiatan</button>' +
+      '<button class="galeri-filter px-5 py-2 rounded-full text-sm font-semibold transition" data-filter="fasilitas">Fasilitas</button>' +
+      '<button class="galeri-filter px-5 py-2 rounded-full text-sm font-semibold transition" data-filter="prestasi">Prestasi</button>' +
+    '</div>' +
+    '<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="galeri-grid">' +
+      galeri.map(function(g){ return galleryItem(g); }).join('') +
+    '</div>' +
+    (galeri.length === 0 ? '<div class="text-center py-16 text-gray-400"><i class="fas fa-images text-5xl mb-4 block"></i><p class="text-lg">Belum ada foto di galeri.</p></div>' : '') +
+  '</section>';
+  document.getElementById('public-content').innerHTML = html;
+  initGaleriFilters();
+}
+
+function initGaleriFilters() {
+  document.querySelectorAll('.galeri-filter').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.galeri-filter').forEach(function(b){ b.classList.remove('active','bg-teal-600','text-white'); b.classList.add('bg-gray-100','text-gray-600'); });
+      this.classList.add('active','bg-teal-600','text-white');
+      this.classList.remove('bg-gray-100','text-gray-600');
+      var filter = this.dataset.filter;
+      var galeri = DB.get('galeri');
+      if (filter !== 'all') galeri = galeri.filter(function(g){ return g.kategori === filter; });
+      document.getElementById('galeri-grid').innerHTML = galeri.length > 0 ? galeri.map(function(g){ return galleryItem(g); }).join('') :
+        '<div class="col-span-full text-center py-12 text-gray-400"><p>Tidak ada foto untuk kategori ini.</p></div>';
+    });
+  });
+  var af = document.querySelector('.galeri-filter.active');
+  if (af) { af.classList.add('bg-teal-600','text-white'); af.classList.remove('bg-gray-100','text-gray-600'); }
+  document.querySelectorAll('.galeri-filter:not(.active)').forEach(function(b){ b.classList.add('bg-gray-100','text-gray-600'); });
+}
+
+/* ========================================================
+   PUBLIC: KONTAK
+======================================================== */
+function renderKontak() {
+  var html = '' +
+  '<section class="hero-bg pt-24 pb-16">' +
+    '<div class="max-w-7xl mx-auto px-4 text-center">' +
+      '<h1 class="font-display font-black text-4xl md:text-5xl text-white mb-3">Hubungi Kami</h1>' +
+      '<p class="text-white/75 text-lg">Kami siap membantu Anda</p>' +
+    '</div>' +
+  '</section>' +
+  '<section class="max-w-7xl mx-auto px-4 py-16">' +
+    '<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">' +
+      kontakCard('fa-map-marker-alt', 'Alamat', 'Jl. Gandaria I No. 1, Kec. Pasar Rebo, Kota Administrasi Jakarta Timur, DKI Jakarta 13710', 'from-red-500 to-pink-500') +
+      kontakCard('fa-phone', 'Telepon', '(024) 123-4567\n081234567890', 'from-primary-500 to-teal-500') +
+      kontakCard('fa-envelope', 'Email', 'sdnpekayon03pg@gmail.com\nsdnpekayon03pg@gmail.com', 'from-violet-500 to-purple-500') +
+    '</div>' +
+    '<div class="grid grid-cols-1 lg:grid-cols-2 gap-10">' +
+      '<div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-8">' +
+        '<h3 class="font-display font-bold text-xl text-gray-800 mb-6">Kirim Pesan</h3>' +
+        '<form id="kontak-form" class="space-y-4">' +
+          '<div class="grid grid-cols-1 md:grid-cols-2 gap-4">' +
+            '<div><label class="form-label">Nama Lengkap</label><input type="text" id="k-nama" class="form-input" placeholder="Nama Anda" required></div>' +
+            '<div><label class="form-label">Email</label><input type="email" id="k-email" class="form-input" placeholder="email@contoh.com" required></div>' +
+          '</div>' +
+          '<div><label class="form-label">Subjek</label><input type="text" id="k-subjek" class="form-input" placeholder="Subjek pesan" required></div>' +
+          '<div><label class="form-label">Pesan</label><textarea id="k-pesan" class="form-input" rows="5" placeholder="Tulis pesan Anda..." required></textarea></div>' +
+          '<button type="submit" class="w-full bg-gradient-to-r from-primary-600 to-teal-600 hover:from-primary-700 hover:to-teal-700 text-white font-semibold py-3 rounded-xl transition shadow-lg shadow-primary-500/20"><i class="fas fa-paper-plane mr-2"></i>Kirim Pesan</button>' +
+        '</form>' +
+      '</div>' +
+      '<div class="rounded-2xl overflow-hidden shadow-lg border border-gray-100 h-[400px] lg:h-auto" style="min-height:400px">' +
+        '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.521260322283!2d106.8195613507864!3d-6.194741395515659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f5d2e764b12d%3A0x3d2ad6e1e0e9bcc8!2sNational%20Monument!5e0!3m2!1sen!2sid!4v1" width="100%" height="100%" style="border:0;min-height:400px" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>' +
+      '</div>' +
+    '</div>' +
+  '</section>';
+  document.getElementById('public-content').innerHTML = html;
+  document.getElementById('kontak-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var nama = document.getElementById('k-nama').value.trim();
+    var email = document.getElementById('k-email').value.trim();
+    var subjek = document.getElementById('k-subjek').value.trim();
+    var pesan = document.getElementById('k-pesan').value.trim();
+    if (!nama || !email || !subjek || !pesan) { showToast('Semua field harus diisi.', 'error'); return; }
+    /* Simpan pesan ke localStorage */
+    var msgs = DB.get('pesan');
+    msgs.push({ id:DB.nextId('pesan'), nama:nama, email:email, subjek:subjek, pesan:pesan, tanggal:todayStr() });
+    DB.set('pesan', msgs);
+    showToast('Pesan berhasil dikirim! Terima kasih.', 'success');
+    this.reset();
+  });
+}
+
+function kontakCard(icon, title, text, gradient) {
+  return '<div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 text-center">' +
+    '<div class="w-14 h-14 rounded-xl bg-gradient-to-br ' + gradient + ' flex items-center justify-center mx-auto mb-4 shadow-lg"><i class="fas ' + icon + ' text-white text-xl"></i></div>' +
+    '<h3 class="font-display font-bold text-gray-800 mb-2">' + title + '</h3>' +
+    '<p class="text-gray-500 text-sm whitespace-pre-line">' + text + '</p></div>';
+}
+
+/* ========================================================
+   DELEGASI KLIK UNTUK KONTEN DINAMIS
+======================================================== */
+document.getElementById('public-content').addEventListener('click', function(e) {
+  var target = e.target.closest('[data-action]');
+  if (!target) return;
+  var action = target.dataset.action;
+  var id = parseInt(target.dataset.id);
+  if (action === 'view-berita') { navigate('berita-detail-' + id); }
+  if (action === 'view-gallery') {
+    var galeri = DB.get('galeri');
+    var item = galeri.find(function(g){ return g.id === id; });
+    if (item) {
+      openModal(item.judul, '<img src="' + item.gambar + '" alt="' + escapeHtml(item.judul) + '" class="w-full rounded-xl">' +
+        '<p class="mt-3 text-sm text-gray-500"><i class="far fa-calendar mr-1"></i>' + formatDate(item.tanggal) + ' &bull; <span class="capitalize">' + item.kategori + '</span></p>', null);
+    }
+  }
+});
+
+/* ========================================================
+   ADMIN: PAGE ROUTER
+======================================================== */
+function renderAdminPage(hash) {
+  var page = hash === 'admin' ? 'dashboard' : hash.replace('admin-','');
+  var content = document.getElementById('admin-content');
+  switch(page) {
+    case 'dashboard': content.innerHTML = renderAdminDashboard(); break;
+    case 'berita': content.innerHTML = renderAdminBerita(); break;
+    case 'galeri': content.innerHTML = renderAdminGaleri(); break;
+    case 'guru': content.innerHTML = renderAdminGuru(); break;
+    case 'kegiatan': content.innerHTML = renderAdminKegiatan(); break;
+    case 'data': content.innerHTML = renderAdminData(); initAdminDataPage(); break;
+    default: content.innerHTML = renderAdminDashboard();
+  }
+}
+
+/* ========================================================
+   ADMIN: DASHBOARD
+======================================================== */
+function renderAdminDashboard() {
+  var berita = DB.get('berita');
+  var galeri = DB.get('galeri');
+  var guru = DB.get('guru');
+  var kegiatan = DB.get('kegiatan');
+  var pesan = DB.get('pesan');
+
+  return '<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">' +
+    adminStatCard('fa-newspaper', 'Berita', berita.length, 'from-primary-500 to-teal-500') +
+    adminStatCard('fa-images', 'Galeri', galeri.length, 'from-amber-500 to-orange-500') +
+    adminStatCard('fa-chalkboard-teacher', 'Guru', guru.length, 'from-violet-500 to-purple-500') +
+    adminStatCard('fa-calendar-alt', 'Kegiatan', kegiatan.length, 'from-red-500 to-pink-500') +
+  '</div>' +
+  '<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">' +
+    '<div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">' +
+      '<h3 class="font-display font-bold text-gray-800 mb-4"><i class="fas fa-clock text-primary-500 mr-2"></i>Berita Terbaru</h3>' +
+      (berita.length > 0 ? '<div class="space-y-3">' + berita.slice(0,5).map(function(b){
+        return '<div class="flex items-center gap-3 p-3 rounded-xl bg-gray-50 hover:bg-gray-100 transition">' +
+          '<img src="' + b.gambar + '" class="w-12 h-12 rounded-lg object-cover flex-shrink-0" alt="">' +
+          '<div class="min-w-0 flex-1"><div class="font-medium text-sm text-gray-800 truncate">' + escapeHtml(b.judul) + '</div><div class="text-xs text-gray-400">' + formatDate(b.tanggal) + '</div></div>' +
+          '<span class="badge badge-' + b.kategori + ' flex-shrink-0">' + b.kategori + '</span></div>';
+      }).join('') + '</div>' : '<p class="text-gray-400 text-sm text-center py-4">Belum ada berita.</p>') +
+    '</div>' +
+    '<div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">' +
+      '<h3 class="font-display font-bold text-gray-800 mb-4"><i class="fas fa-envelope text-violet-500 mr-2"></i>Pesan Masuk (' + pesan.length + ')</h3>' +
+      (pesan.length > 0 ? '<div class="space-y-3">' + pesan.slice(-5).reverse().map(function(p){
+        return '<div class="p-3 rounded-xl bg-gray-50"><div class="flex justify-between items-start mb-1"><span class="font-medium text-sm text-gray-800">' + escapeHtml(p.nama) + '</span><span class="text-xs text-gray-400">' + formatDate(p.tanggal) + '</span></div><div class="text-xs text-primary-600 mb-1">' + escapeHtml(p.subjek) + '</div><div class="text-xs text-gray-500 truncate">' + escapeHtml(p.pesan) + '</div></div>';
+      }).join('') + '</div>' : '<p class="text-gray-400 text-sm text-center py-4">Belum ada pesan masuk.</p>') +
+    '</div>' +
+  '</div>';
+}
+
+function adminStatCard(icon, label, value, gradient) {
+  return '<div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 flex items-center gap-4">' +
+    '<div class="w-14 h-14 rounded-xl bg-gradient-to-br ' + gradient + ' flex items-center justify-center flex-shrink-0 shadow-lg"><i class="fas ' + icon + ' text-white text-lg"></i></div>' +
+    '<div><div class="font-display font-black text-2xl text-gray-800">' + value + '</div><div class="text-gray-400 text-sm font-medium">' + label + '</div></div></div>';
+}
+
+/* ========================================================
+   ADMIN: KELOLA BERITA
+======================================================== */
+function renderAdminBerita() {
+  var items = DB.get('berita');
+  return '<div class="flex justify-between items-center mb-6">' +
+    '<p class="text-gray-500 text-sm">Total: <strong>' + items.length + '</strong> berita</p>' +
+    '<button onclick="showFormBerita()" class="bg-primary-600 hover:bg-primary-700 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition shadow-lg shadow-primary-500/20"><i class="fas fa-plus mr-2"></i>Tambah Berita</button>' +
+  '</div>' +
+  '<div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-x-auto">' +
+  (items.length > 0 ?
+  '<table class="admin-table"><thead><tr><th>Gambar</th><th>Judul</th><th>Kategori</th><th>Tanggal</th><th>Aksi</th></tr></thead><tbody>' +
+  items.map(function(b){
+    return '<tr><td><img src="' + b.gambar + '" class="w-16 h-10 rounded-lg object-cover" alt=""></td>' +
+      '<td class="font-medium max-w-[200px] truncate">' + escapeHtml(b.judul) + '</td>' +
+      '<td><span class="badge badge-' + b.kategori + '">' + b.kategori + '</span></td>' +
+      '<td class="text-sm text-gray-500">' + formatDate(b.tanggal) + '</td>' +
+      '<td><div class="flex gap-2"><button onclick="showFormBerita(' + b.id + ')" class="w-8 h-8 rounded-lg bg-amber-100 text-amber-600 hover:bg-amber-200 flex items-center justify-center transition text-xs" title="Edit"><i class="fas fa-edit"></i></button>' +
+      '<button onclick="deleteBerita(' + b.id + ')" class="w-8 h-8 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 flex items-center justify-center transition text-xs" title="Hapus"><i class="fas fa-trash"></i></button></div></td></tr>';
+  }).join('') + '</tbody></table>'
+  : '<div class="text-center py-12 text-gray-400"><i class="fas fa-newspaper text-4xl mb-3 block"></i><p>Belum ada berita.</p></div>') +
+  '</div>';
+}
+
+function showFormBerita(id) {
+  var item = id ? DB.get('berita').find(function(b){return b.id===id;}) : null;
+  var title = item ? 'Edit Berita' : 'Tambah Berita Baru';
+  var html = '<div class="space-y-4">' +
+    '<div><label class="form-label">Judul</label><input type="text" id="f-berita-judul" class="form-input" value="' + (item ? escapeHtml(item.judul) : '') + '" placeholder="Judul berita"></div>' +
+    '<div><label class="form-label">Isi</label><textarea id="f-berita-isi" class="form-input" rows="6" placeholder="Isi berita...">' + (item ? escapeHtml(item.isi) : '') + '</textarea></div>' +
+    '<div><label class="form-label">URL Gambar</label><input type="url" id="f-berita-gambar" class="form-input" value="' + (item ? item.gambar : '') + '" placeholder="https://picsum.photos/seed/contoh/800/400"></div>' +
+    '<div class="grid grid-cols-2 gap-4">' +
+      '<div><label class="form-label">Kategori</label><select id="f-berita-kategori" class="form-input"><option value="berita"' + (item && item.kategori==='berita'?' selected':'') + '>Berita</option><option value="pengumuman"' + (item && item.kategori==='pengumuman'?' selected':'') + '>Pengumuman</option><option value="prestasi"' + (item && item.kategori==='prestasi'?' selected':'') + '>Prestasi</option></select></div>' +
+      '<div><label class="form-label">Tanggal</label><input type="date" id="f-berita-tanggal" class="form-input" value="' + (item ? item.tanggal : todayStr()) + '"></div>' +
+    '</div>' +
+    '</div>';
+  openModal(title, html, function() {
+    var judul = document.getElementById('f-berita-judul').value.trim();
+    var isi = document.getElementById('f-berita-isi').value.trim();
+    var gambar = document.getElementById('f-berita-gambar').value.trim();
+    var kategori = document.getElementById('f-berita-kategori').value;
+    var tanggal = document.getElementById('f-berita-tanggal').value;
+    if (!judul || !isi) { showToast('Judul dan isi wajib diisi.', 'error'); return; }
+    if (!gambar) gambar = 'https://picsum.photos/seed/' + Date.now() + '/800/400';
+    var items = DB.get('berita');
+    if (item) {
+      var idx = items.findIndex(function(b){return b.id===id;});
+      if (idx > -1) { items[idx] = Object.assign({}, item, {judul:judul,isi:isi,gambar:gambar,kategori:kategori,tanggal:tanggal}); }
+    } else {
+      items.unshift({ id:DB.nextId('berita'), judul:judul, isi:isi, gambar:gambar, kategori:kategori, tanggal:tanggal, penulis:'Admin' });
+    }
+    DB.set('berita', items);
+    closeModal();
+    showToast(item ? 'Berita berhasil diperbarui.' : 'Berita berhasil ditambahkan.', 'success');
+    renderAdminPage('admin-berita');
+  });
+}
+
+function deleteBerita(id) {
+  openConfirmModal('Apakah Anda yakin ingin menghapus berita ini?', function() {
+    var items = DB.get('berita').filter(function(b){return b.id!==id;});
+    DB.set('berita', items);
+    showToast('Berita berhasil dihapus.', 'success');
+    renderAdminPage('admin-berita');
+  });
+}
+
+/* ========================================================
+   ADMIN: KELOLA GALERI
+======================================================== */
+function renderAdminGaleri() {
+  var items = DB.get('galeri');
+  return '<div class="flex justify-between items-center mb-6">' +
+    '<p class="text-gray-500 text-sm">Total: <strong>' + items.length + '</strong> foto</p>' +
+    '<button onclick="showFormGaleri()" class="bg-teal-600 hover:bg-teal-700 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition shadow-lg shadow-teal-500/20"><i class="fas fa-plus mr-2"></i>Tambah Foto</button>' +
+  '</div>' +
+  '<div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-x-auto">' +
+  (items.length > 0 ?
+  '<table class="admin-table"><thead><tr><th>Foto</th><th>Judul</th><th>Kategori</th><th>Tanggal</th><th>Aksi</th></tr></thead><tbody>' +
+  items.map(function(g){
+    return '<tr><td><img src="' + g.gambar + '" class="w-16 h-10 rounded-lg object-cover" alt=""></td>' +
+      '<td class="font-medium">' + escapeHtml(g.judul) + '</td>' +
+      '<td><span class="badge badge-' + g.kategori + '">' + g.kategori + '</span></td>' +
+      '<td class="text-sm text-gray-500">' + formatDate(g.tanggal) + '</td>' +
+      '<td><div class="flex gap-2"><button onclick="showFormGaleri(' + g.id + ')" class="w-8 h-8 rounded-lg bg-amber-100 text-amber-600 hover:bg-amber-200 flex items-center justify-center transition text-xs" title="Edit"><i class="fas fa-edit"></i></button>' +
+      '<button onclick="deleteGaleri(' + g.id + ')" class="w-8 h-8 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 flex items-center justify-center transition text-xs" title="Hapus"><i class="fas fa-trash"></i></button></div></td></tr>';
+  }).join('') + '</tbody></table>'
+  : '<div class="text-center py-12 text-gray-400"><i class="fas fa-images text-4xl mb-3 block"></i><p>Belum ada foto.</p></div>') +
+  '</div>';
+}
+
+function showFormGaleri(id) {
+  var item = id ? DB.get('galeri').find(function(g){return g.id===id;}) : null;
+  var title = item ? 'Edit Foto' : 'Tambah Foto Baru';
+  var html = '<div class="space-y-4">' +
+    '<div><label class="form-label">Judul</label><input type="text" id="f-gal-judul" class="form-input" value="' + (item ? escapeHtml(item.judul) : '') + '" placeholder="Judul foto"></div>' +
+    '<div><label class="form-label">URL Gambar</label><input type="url" id="f-gal-gambar" class="form-input" value="' + (item ? item.gambar : '') + '" placeholder="https://picsum.photos/seed/contoh/600/400"></div>' +
+    '<div class="grid grid-cols-2 gap-4">' +
+      '<div><label class="form-label">Kategori</label><select id="f-gal-kategori" class="form-input"><option value="kegiatan"' + (item && item.kategori==='kegiatan'?' selected':'') + '>Kegiatan</option><option value="fasilitas"' + (item && item.kategori==='fasilitas'?' selected':'') + '>Fasilitas</option><option value="prestasi"' + (item && item.kategori==='prestasi'?' selected':'') + '>Prestasi</option></select></div>' +
+      '<div><label class="form-label">Tanggal</label><input type="date" id="f-gal-tanggal" class="form-input" value="' + (item ? item.tanggal : todayStr()) + '"></div>' +
+    '</div></div>';
+  openModal(title, html, function() {
+    var judul = document.getElementById('f-gal-judul').value.trim();
+    var gambar = document.getElementById('f-gal-gambar').value.trim();
+    var kategori = document.getElementById('f-gal-kategori').value;
+    var tanggal = document.getElementById('f-gal-tanggal').value;
+    if (!judul) { showToast('Judul wajib diisi.', 'error'); return; }
+    if (!gambar) gambar = 'https://picsum.photos/seed/' + Date.now() + '/600/400';
+    var items = DB.get('galeri');
+    if (item) {
+      var idx = items.findIndex(function(g){return g.id===id;});
+      if (idx > -1) { items[idx] = Object.assign({}, item, {judul:judul,gambar:gambar,kategori:kategori,tanggal:tanggal}); }
+    } else {
+      items.unshift({ id:DB.nextId('galeri'), judul:judul, gambar:gambar, kategori:kategori, tanggal:tanggal });
+    }
+    DB.set('galeri', items);
+    closeModal();
+    showToast(item ? 'Foto berhasil diperbarui.' : 'Foto berhasil ditambahkan.', 'success');
+    renderAdminPage('admin-galeri');
+  });
+}
+
+function deleteGaleri(id) {
+  openConfirmModal('Apakah Anda yakin ingin menghapus foto ini?', function() {
+    var items = DB.get('galeri').filter(function(g){return g.id!==id;});
+    DB.set('galeri', items);
+    showToast('Foto berhasil dihapus.', 'success');
+    renderAdminPage('admin-galeri');
+  });
+}
+
+/* ========================================================
+   ADMIN: KELOLA GURU
+======================================================== */
+function renderAdminGuru() {
+  var items = DB.get('guru');
+  return '<div class="flex justify-between items-center mb-6">' +
+    '<p class="text-gray-500 text-sm">Total: <strong>' + items.length + '</strong> guru</p>' +
+    '<button onclick="showFormGuru()" class="bg-violet-600 hover:bg-violet-700 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition shadow-lg shadow-violet-500/20"><i class="fas fa-plus mr-2"></i>Tambah Guru</button>' +
+  '</div>' +
+  '<div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-x-auto">' +
+  (items.length > 0 ?
+  '<table class="admin-table"><thead><tr><th>Foto</th><th>Nama</th><th>NIP</th><th>Jabatan</th><th>Mapel</th><th>Aksi</th></tr></thead><tbody>' +
+  items.map(function(g){
+    return '<tr><td><img src="' + g.foto + '" class="w-10 h-10 rounded-full object-cover" alt=""></td>' +
+      '<td class="font-medium">' + escapeHtml(g.nama) + '</td>' +
+      '<td class="text-sm text-gray-500">' + escapeHtml(g.nip) + '</td>' +
+      '<td class="text-sm">' + escapeHtml(g.jabatan) + '</td>' +
+      '<td class="text-sm text-gray-500">' + escapeHtml(g.mapel) + '</td>' +
+      '<td><div class="flex gap-2"><button onclick="showFormGuru(' + g.id + ')" class="w-8 h-8 rounded-lg bg-amber-100 text-amber-600 hover:bg-amber-200 flex items-center justify-center transition text-xs" title="Edit"><i class="fas fa-edit"></i></button>' +
+      '<button onclick="deleteGuru(' + g.id + ')" class="w-8 h-8 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 flex items-center justify-center transition text-xs" title="Hapus"><i class="fas fa-trash"></i></button></div></td></tr>';
+  }).join('') + '</tbody></table>'
+  : '<div class="text-center py-12 text-gray-400"><i class="fas fa-chalkboard-teacher text-4xl mb-3 block"></i><p>Belum ada data guru.</p></div>') +
+  '</div>';
+}
+
+function showFormGuru(id) {
+  var item = id ? DB.get('guru').find(function(g){return g.id===id;}) : null;
+  var title = item ? 'Edit Data Guru' : 'Tambah Guru Baru';
+  var html = '<div class="space-y-4">' +
+    '<div><label class="form-label">Nama Lengkap</label><input type="text" id="f-guru-nama" class="form-input" value="' + (item ? escapeHtml(item.nama) : '') + '" placeholder="Nama lengkap beserta gelar"></div>' +
+    '<div class="grid grid-cols-2 gap-4">' +
+      '<div><label class="form-label">NIP</label><input type="text" id="f-guru-nip" class="form-input" value="' + (item ? escapeHtml(item.nip) : '') + '" placeholder="NIP"></div>' +
+      '<div><label class="form-label">Telepon</label><input type="text" id="f-guru-telp" class="form-input" value="' + (item ? escapeHtml(item.telepon) : '') + '" placeholder="08xxxxxxxxxx"></div>' +
+    '</div>' +
+    '<div class="grid grid-cols-2 gap-4">' +
+      '<div><label class="form-label">Jabatan</label><input type="text" id="f-guru-jabatan" class="form-input" value="' + (item ? escapeHtml(item.jabatan) : '') + '" placeholder="Jabatan"></div>' +
+      '<div><label class="form-label">Mata Pelajaran</label><input type="text" id="f-guru-mapel" class="form-input" value="' + (item ? escapeHtml(item.mapel) : '') + '" placeholder="Mata pelajaran"></div>' +
+    '</div>' +
+    '<div><label class="form-label">URL Foto</label><input type="url" id="f-guru-foto" class="form-input" value="' + (item ? item.foto : '') + '" placeholder="https://picsum.photos/seed/contoh/300/300"></div>' +
+    '</div>';
+  openModal(title, html, function() {
+    var nama = document.getElementById('f-guru-nama').value.trim();
+    var nip = document.getElementById('f-guru-nip').value.trim();
+    var telp = document.getElementById('f-guru-telp').value.trim();
+    var jabatan = document.getElementById('f-guru-jabatan').value.trim();
+    var mapel = document.getElementById('f-guru-mapel').value.trim();
+    var foto = document.getElementById('f-guru-foto').value.trim();
+    if (!nama) { showToast('Nama wajib diisi.', 'error'); return; }
+    if (!foto) foto = 'https://picsum.photos/seed/guru' + Date.now() + '/300/300';
+    var items = DB.get('guru');
+    if (item) {
+      var idx = items.findIndex(function(g){return g.id===id;});
+      if (idx > -1) { items[idx] = Object.assign({}, item, {nama:nama,nip:nip,telepon:telp,jabatan:jabatan,mapel:mapel,foto:foto}); }
+    } else {
+      items.push({ id:DB.nextId('guru'), nama:nama, nip:nip, telepon:telp, jabatan:jabatan, mapel:mapel, foto:foto });
+    }
+    DB.set('guru', items);
+    closeModal();
+    showToast(item ? 'Data guru berhasil diperbarui.' : 'Guru berhasil ditambahkan.', 'success');
+    renderAdminPage('admin-guru');
+  });
+}
+
+function deleteGuru(id) {
+  openConfirmModal('Apakah Anda yakin ingin menghapus data guru ini?', function() {
+    var items = DB.get('guru').filter(function(g){return g.id!==id;});
+    DB.set('guru', items);
+    showToast('Data guru berhasil dihapus.', 'success');
+    renderAdminPage('admin-guru');
+  });
+}
+
+/* ========================================================
+   ADMIN: KELOLA KEGIATAN
+======================================================== */
+function renderAdminKegiatan() {
+  var items = DB.get('kegiatan');
+  return '<div class="flex justify-between items-center mb-6">' +
+    '<p class="text-gray-500 text-sm">Total: <strong>' + items.length + '</strong> kegiatan</p>' +
+    '<button onclick="showFormKegiatan()" class="bg-red-500 hover:bg-red-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition shadow-lg shadow-red-500/20"><i class="fas fa-plus mr-2"></i>Tambah Kegiatan</button>' +
+  '</div>' +
+  '<div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-x-auto">' +
+  (items.length > 0 ?
+  '<table class="admin-table"><thead><tr><th>Gambar</th><th>Nama Kegiatan</th><th>Tanggal</th><th>Tempat</th><th>Aksi</th></tr></thead><tbody>' +
+  items.map(function(k){
+    return '<tr><td><img src="' + k.gambar + '" class="w-16 h-10 rounded-lg object-cover" alt=""></td>' +
+      '<td class="font-medium">' + escapeHtml(k.nama) + '</td>' +
+      '<td class="text-sm text-gray-500">' + formatDate(k.tanggal) + '<br><span class="text-xs">' + escapeHtml(k.waktu) + '</span></td>' +
+      '<td class="text-sm">' + escapeHtml(k.tempat) + '</td>' +
+      '<td><div class="flex gap-2"><button onclick="showFormKegiatan(' + k.id + ')" class="w-8 h-8 rounded-lg bg-amber-100 text-amber-600 hover:bg-amber-200 flex items-center justify-center transition text-xs" title="Edit"><i class="fas fa-edit"></i></button>' +
+      '<button onclick="deleteKegiatan(' + k.id + ')" class="w-8 h-8 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 flex items-center justify-center transition text-xs" title="Hapus"><i class="fas fa-trash"></i></button></div></td></tr>';
+  }).join('') + '</tbody></table>'
+  : '<div class="text-center py-12 text-gray-400"><i class="fas fa-calendar-alt text-4xl mb-3 block"></i><p>Belum ada kegiatan.</p></div>') +
+  '</div>';
+}
+
+function showFormKegiatan(id) {
+  var item = id ? DB.get('kegiatan').find(function(k){return k.id===id;}) : null;
+  var title = item ? 'Edit Kegiatan' : 'Tambah Kegiatan Baru';
+  var html = '<div class="space-y-4">' +
+    '<div><label class="form-label">Nama Kegiatan</label><input type="text" id="f-keg-nama" class="form-input" value="' + (item ? escapeHtml(item.nama) : '') + '" placeholder="Nama kegiatan"></div>' +
+    '<div><label class="form-label">Deskripsi</label><textarea id="f-keg-desk" class="form-input" rows="4" placeholder="Deskripsi kegiatan...">' + (item ? escapeHtml(item.deskripsi) : '') + '</textarea></div>' +
+    '<div><label class="form-label">URL Gambar</label><input type="url" id="f-keg-gambar" class="form-input" value="' + (item ? item.gambar : '') + '" placeholder="https://picsum.photos/seed/contoh/800/400"></div>' +
+    '<div class="grid grid-cols-3 gap-4">' +
+      '<div><label class="form-label">Tanggal</label><input type="date" id="f-keg-tanggal" class="form-input" value="' + (item ? item.tanggal : todayStr()) + '"></div>' +
+      '<div><label class="form-label">Waktu</label><input type="text" id="f-keg-waktu" class="form-input" value="' + (item ? escapeHtml(item.waktu) : '08:00 - 12:00') + '" placeholder="08:00 - 12:00"></div>' +
+      '<div><label class="form-label">Tempat</label><input type="text" id="f-keg-tempat" class="form-input" value="' + (item ? escapeHtml(item.tempat) : '') + '" placeholder="Tempat"></div>' +
+    '</div></div>';
+  openModal(title, html, function() {
+    var nama = document.getElementById('f-keg-nama').value.trim();
+    var desk = document.getElementById('f-keg-desk').value.trim();
+    var gambar = document.getElementById('f-keg-gambar').value.trim();
+    var tanggal = document.getElementById('f-keg-tanggal').value;
+    var waktu = document.getElementById('f-keg-waktu').value.trim();
+    var tempat = document.getElementById('f-keg-tempat').value.trim();
+    if (!nama) { showToast('Nama kegiatan wajib diisi.', 'error'); return; }
+    if (!gambar) gambar = 'https://picsum.photos/seed/keg' + Date.now() + '/800/400';
+    var items = DB.get('kegiatan');
+    if (item) {
+      var idx = items.findIndex(function(k){return k.id===id;});
+      if (idx > -1) { items[idx] = Object.assign({}, item, {nama:nama,deskripsi:desk,gambar:gambar,tanggal:tanggal,waktu:waktu,tempat:tempat}); }
+    } else {
+      items.push({ id:DB.nextId('kegiatan'), nama:nama, deskripsi:desk, gambar:gambar, tanggal:tanggal, waktu:waktu, tempat:tempat });
+    }
+    DB.set('kegiatan', items);
+    closeModal();
+    showToast(item ? 'Kegiatan berhasil diperbarui.' : 'Kegiatan berhasil ditambahkan.', 'success');
+    renderAdminPage('admin-kegiatan');
+  });
+}
+
+function deleteKegiatan(id) {
+  openConfirmModal('Apakah Anda yakin ingin menghapus kegiatan ini?', function() {
+    var items = DB.get('kegiatan').filter(function(k){return k.id!==id;});
+    DB.set('kegiatan', items);
+    showToast('Kegiatan berhasil dihapus.', 'success');
+    renderAdminPage('admin-kegiatan');
+  });
+}
+
+/* ========================================================
+   ADMIN: EXPORT / IMPORT DATA
+======================================================== */
+function renderAdminData() {
+  return '<div class="grid grid-cols-1 md:grid-cols-2 gap-6">' +
+    /* Export */
+    '<div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">' +
+      '<div class="flex items-center gap-3 mb-4"><div class="w-12 h-12 rounded-xl bg-primary-100 flex items-center justify-center"><i class="fas fa-download text-primary-600 text-xl"></i></div><div><h3 class="font-display font-bold text-gray-800">Export Data</h3><p class="text-gray-400 text-sm">Download semua data sebagai file JSON</p></div></div>' +
+      '<p class="text-gray-500 text-sm mb-4">Mengunduh seluruh data berita, galeri, guru, kegiatan, dan pesan masuk.</p>' +
+      '<button onclick="exportData()" class="w-full bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-xl font-semibold text-sm transition"><i class="fas fa-file-export mr-2"></i>Export JSON</button>' +
+    '</div>' +
+    /* Import */
+    '<div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">' +
+      '<div class="flex items-center gap-3 mb-4"><div class="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center"><i class="fas fa-upload text-amber-600 text-xl"></i></div><div><h3 class="font-display font-bold text-gray-800">Import Data</h3><p class="text-gray-400 text-sm">Pulihkan data dari file JSON</p></div></div>' +
+      '<p class="text-gray-500 text-sm mb-4">Mengimpor data akan <strong>menimpa</strong> semua data yang ada. Pastikan Anda sudah melakukan backup.</p>' +
+      '<input type="file" id="import-file" accept=".json" class="hidden">' +
+      '<button onclick="document.getElementById(\'import-file\').click()" class="w-full bg-amber-500 hover:bg-amber-600 text-white py-3 rounded-xl font-semibold text-sm transition"><i class="fas fa-file-import mr-2"></i>Pilih File JSON</button>' +
+    '</div>' +
+    /* Reset */
+    '<div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">' +
+      '<div class="flex items-center gap-3 mb-4"><div class="w-12 h-12 rounded-xl bg-red-100 flex items-center justify-center"><i class="fas fa-undo text-red-600 text-xl"></i></div><div><h3 class="font-display font-bold text-gray-800">Reset Data</h3><p class="text-gray-400 text-sm">Kembalikan ke data awal</p></div></div>' +
+      '<p class="text-gray-500 text-sm mb-4">Menghapus semua data dan mengembalikan ke data contoh awal. Tindakan ini tidak dapat dibatalkan.</p>' +
+      '<button onclick="resetData()" class="w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-xl font-semibold text-sm transition"><i class="fas fa-trash-alt mr-2"></i>Reset ke Data Awal</button>' +
+    '</div>' +
+    /* Pesan masuk */
+    '<div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">' +
+      '<div class="flex items-center gap-3 mb-4"><div class="w-12 h-12 rounded-xl bg-violet-100 flex items-center justify-center"><i class="fas fa-envelope text-violet-600 text-xl"></i></div><div><h3 class="font-display font-bold text-gray-800">Pesan Masuk</h3><p class="text-gray-400 text-sm">Kelola pesan dari formulir kontak</p></div></div>' +
+      '<button onclick="lihatPesan()" class="w-full bg-violet-500 hover:bg-violet-600 text-white py-3 rounded-xl font-semibold text-sm transition"><i class="fas fa-list mr-2"></i>Lihat Pesan (' + DB.get('pesan').length + ')</button>' +
+    '</div>' +
+  '</div>';
+}
+
+function initAdminDataPage() {
+  var fileInput = document.getElementById('import-file');
+  if (fileInput) {
+    fileInput.addEventListener('change', function(e) {
+      var file = e.target.files[0];
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function(ev) {
+        try {
+          var data = JSON.parse(ev.target.result);
+          if (data.berita) DB.set('berita', data.berita);
+          if (data.galeri) DB.set('galeri', data.galeri);
+          if (data.guru) DB.set('guru', data.guru);
+          if (data.kegiatan) DB.set('kegiatan', data.kegiatan);
+          if (data.pesan) DB.set('pesan', data.pesan);
+          showToast('Data berhasil diimpor!', 'success');
+          renderAdminPage('admin-data');
+        } catch(err) {
+          showToast('File tidak valid. Pastikan format JSON benar.', 'error');
+        }
+      };
+      reader.readAsText(file);
+      this.value = '';
+    });
+  }
+}
+
+function exportData() {
+  var data = {
+    berita: DB.get('berita'),
+    galeri: DB.get('galeri'),
+    guru: DB.get('guru'),
+    kegiatan: DB.get('kegiatan'),
+    pesan: DB.get('pesan'),
+    exportedAt: new Date().toISOString()
+  };
+  var blob = new Blob([JSON.stringify(data, null, 2)], { type:'application/json' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'sdn1_ceria_data_' + todayStr() + '.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('Data berhasil diexport!', 'success');
+}
+
+function resetData() {
+  openConfirmModal('Apakah Anda yakin ingin mereset semua data ke awal? Tindakan ini tidak dapat dibatalkan.', function() {
+    localStorage.removeItem('sdn1_berita');
+    localStorage.removeItem('sdn1_galeri');
+    localStorage.removeItem('sdn1_guru');
+    localStorage.removeItem('sdn1_kegiatan');
+    localStorage.removeItem('sdn1_pesan');
+    DB.init();
+    showToast('Data berhasil direset ke awal.', 'success');
+    renderAdminPage('admin-data');
+  });
+}
+
+function lihatPesan() {
+  var pesan = DB.get('pesan');
+  if (pesan.length === 0) {
+    openModal('Pesan Masuk', '<div class="text-center py-8 text-gray-400"><i class="fas fa-inbox text-4xl mb-3 block"></i><p>Belum ada pesan masuk.</p></div>', null);
+    return;
+  }
+  var html = '<div class="space-y-3">' + pesan.slice().reverse().map(function(p) {
+    return '<div class="p-4 rounded-xl bg-gray-50 border border-gray-100">' +
+      '<div class="flex justify-between items-start mb-2"><span class="font-semibold text-gray-800 text-sm">' + escapeHtml(p.nama) + '</span><span class="text-xs text-gray-400">' + formatDate(p.tanggal) + '</span></div>' +
+      '<div class="text-xs text-primary-600 mb-1">' + escapeHtml(p.subjek) + '</div>' +
+      '<div class="text-xs text-gray-400 mb-2">' + escapeHtml(p.email) + '</div>' +
+      '<div class="text-sm text-gray-600 leading-relaxed">' + escapeHtml(p.pesan) + '</div>' +
+      '<div class="mt-3"><button onclick="hapusPesan(' + p.id + ')" class="text-red-500 text-xs hover:text-red-600 font-medium"><i class="fas fa-trash mr-1"></i>Hapus</button></div>' +
+    '</div>';
+  }).join('') + '</div>';
+  openModal('Pesan Masuk (' + pesan.length + ')', html, null);
+}
+
+function hapusPesan(id) {
+  var items = DB.get('pesan').filter(function(p){return p.id!==id;});
+  DB.set('pesan', items);
+  showToast('Pesan dihapus.', 'success');
+  closeModal();
+  setTimeout(function(){ lihatPesan(); }, 300);
+}
+
+/* ========================================================
+   ADMIN SIDEBAR NAV CLICK
+======================================================== */
+document.getElementById('admin-nav').addEventListener('click', function(e) {
+  e.preventDefault();
+  var link = e.target.closest('a[data-admin-nav]');
+  if (!link) return;
+  navigate(link.getAttribute('href'));
+});
+
+/* ========================================================
+   HEADER SCROLL EFFECT
+======================================================== */
+var lastScroll = 0;
+window.addEventListener('scroll', function() {
+  var header = document.getElementById('main-header');
+  if (!header) return;
+  var st = window.scrollY;
+  if (st > 50) {
+    header.classList.add('shadow-md');
+    header.style.background = 'rgba(255,255,255,0.98)';
+  } else {
+    header.classList.remove('shadow-md');
+    header.style.background = 'rgba(255,255,255,0.95)';
+  }
+  lastScroll = st;
+});
+
+/* ========================================================
+   KEYBOARD: ESC UNTUK TUTUP MODAL
+======================================================== */
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    if (document.getElementById('modal-overlay').classList.contains('active')) {
+      closeModal();
+    }
+  }
+});
+
+/* ========================================================
+   INIT
+======================================================== */
+function init() {
+  DB.init();
+  window.addEventListener('hashchange', handleRoute);
+  handleRoute();
+}
+
+init();
+</script>
+</body>
+</html>
